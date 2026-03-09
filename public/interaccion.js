@@ -465,6 +465,10 @@ window.onload = () => {
    SISTEMA DE MENÚ MÓVIL (ULTRA-COMPATIBLE)
    ========================================================================== */
 
+/* ==========================================================================
+   SISTEMA DE MENÚ MÓVIL (COMPATIBLE CON CARRITO)
+   ========================================================================== */
+
 window.toggleMobileMenu = function() {
     const navLinks = document.querySelector('.nav-links');
     if (navLinks) {
@@ -472,7 +476,7 @@ window.toggleMobileMenu = function() {
     }
 };
 
-// Escuchador global para cerrar el menú
+// Escuchador global para cerrar el menú al interactuar con cualquier otra cosa
 document.addEventListener('click', (e) => {
     const navLinks = document.querySelector('.nav-links');
     const menuBtn = document.querySelector('.menu-toggle');
@@ -480,12 +484,13 @@ document.addEventListener('click', (e) => {
     // Si el menú NO está abierto, no hacemos nada
     if (!navLinks || !navLinks.classList.contains('active')) return;
 
-    // CERRAMOS EL MENÚ SI:
+    // CERRAMOS EL MENÚ SI PULSAS:
     if (
-        e.target.closest('.nav-links a') ||           // 1. Pulsas un enlace normal
-        e.target.closest('.user-access') ||          // 2. Pulsas "Entrar" o "Únete"
-        e.target.closest('.cart-icon-container') ||  // 3. Pulsas el carrito
-        (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) // 4. Pulsas fuera
+        e.target.closest('.nav-links a') ||           // 1. Un enlace del menú
+        e.target.closest('[onclick*="toggleCart"]') || // 2. El botón del carrito (por su función)
+        e.target.closest('#cart-icon') ||              // 3. El icono del carrito por ID
+        e.target.closest('.user-access') ||           // 4. Entrar / Únete
+        (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) // 5. Fuera de todo
     ) {
         navLinks.classList.remove('active');
     }

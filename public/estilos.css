@@ -1504,6 +1504,16 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     }
 }
 
+/* Forzamos que el panel del carrito esté por ENCIMA del menú móvil */
+#cart-panel {
+    z-index: 20000 !important; /* Más alto que el 10001 del menú */
+}
+
+/* Y si tienes un fondo oscuro detrás del carrito (overlay) */
+.cart-overlay {
+    z-index: 19999 !important;
+}
+
 /* 7. ANIMACIONES */
 @keyframes fadeInDown {
     from { opacity: 0; transform: translateY(-10px); }
