@@ -1,11 +1,13 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
 const cors = require('cors');
+const path = require('path'); // Movido arriba por orden
 
 const app = express();
 app.use(cors()); 
 app.use(express.json()); 
 
+// Configuración de la base de datos (TIDB Cloud)
 const dbConfig = {
     host: 'gateway01.eu-central-1.prod.aws.tidbcloud.com',
     user: '5rTWHdrTkzJQtt1.root',
@@ -17,6 +19,18 @@ const dbConfig = {
         rejectUnauthorized: true
     }
 };
+
+// --- SERVIR ARCHIVOS ESTÁTICOS ---
+// Esta línea es CRUCIAL: le dice a Render que busque los archivos en la raíz del proyecto
+app.use(express.static(__dirname));
+
+// --- RUTA PRINCIPAL ---
+// Cuando alguien entra a olimpo-web.onrender.com, le enviamos el XML
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'hamburgueseria.xml')); 
+});
+
+// --- RUTAS DE API ---
 
 // LOGIN
 app.post('/login', async (req, res) => {
@@ -31,11 +45,11 @@ app.post('/login', async (req, res) => {
             res.status(401).json({ exito: false, mensaje: "MORTAL NO ENCONTRADO" });
         }
     } catch (error) {
-        res.status(500).json({ mensaje: "ERROR DB" });
+        res.status(500).json({ mensaje: "ERROR DB: " + error.message });
     } finally { if (connection) await connection.end(); }
 });
 
-// GUARDAR PEDIDO (Calcula envío y resta puntos)
+// GUARDAR PEDIDO
 app.post('/guardar-pedido', async (req, res) => {
     const { email, total, consumirPuntos } = req.body;
     let connection;
@@ -52,11 +66,11 @@ app.post('/guardar-pedido', async (req, res) => {
         res.status(200).json({ mensaje: "PUNTOS ACTUALIZADOS" });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensaje: "ERROR AL GUARDAR" });
+        res.status(500).json({ mensaje: "ERROR AL GUARDAR: " + error.message });
     } finally { if (connection) await connection.end(); }
 });
 
-// HISTORIAL (Envía Pedidos + Puntos Reales)
+// HISTORIAL
 app.get('/historial/:email', async (req, res) => {
     const email = req.params.email;
     let connection;
@@ -67,7 +81,7 @@ app.get('/historial/:email', async (req, res) => {
         const puntosReales = usuario.length > 0 ? usuario[0].puntos : 0;
         res.json({ pedidos, puntos: puntosReales });
     } catch (error) {
-        res.status(500).json({ mensaje: "ERROR HISTORIAL" });
+        res.status(500).json({ mensaje: "ERROR HISTORIAL: " + error.message });
     } finally { if (connection) await connection.end(); }
 });
 
@@ -79,24 +93,14 @@ app.post('/registro', async (req, res) => {
         connection = await mysql.createConnection(dbConfig);
         await connection.execute("INSERT INTO usuarios (nombre, email, password, direccion, puntos) VALUES (?, ?, ?, ?, 0)", [nombre, email, password, direccion]);
         res.json({ mensaje: "MORTAL REGISTRADO" });
-  } catch (error) {
-    console.error(error); // Esto imprime el error en la consola de Render para que tú lo veas
-    res.status(500).json({ mensaje: "ERROR DB: " + error.message });
-
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensaje: "ERROR DB: " + error.message });
     } finally { if (connection) await connection.end(); }
 });
 
-const path = require('path');
-
-// Esto sirve tus archivos estáticos (CSS, JS, imágenes)
-app.use(express.static(path.join(__dirname, '')));
-
-// Esto sirve tu archivo principal (XML o HTML)
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'hamburgueseria.xml')); 
-});
+// PUERTO
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor del Olimpo en el puerto ${PORT}`);
 });
-//final
