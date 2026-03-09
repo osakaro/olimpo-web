@@ -91,6 +91,6 @@ app.get('/', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Servidor del Olimpo en el puerto ${PORT}`);
 });
