@@ -468,19 +468,19 @@ window.toggleMobileMenu = function() {
     }
 };
 
-// CERRAR AUTOMÁTICAMENTE
+// CERRAR AL PULSAR ENLACE O FUERA
 document.addEventListener('click', (e) => {
     const navLinks = document.querySelector('.nav-links');
     const menuBtn = document.querySelector('.menu-toggle');
 
-    // Si el menú está abierto...
     if (navLinks && navLinks.classList.contains('active')) {
-        // 1. Si pulsas un enlace de dentro del menú, se cierra
-        if (e.target.closest('.nav-links a')) {
-            navLinks.classList.remove('active');
+        // Si pulsamos un enlace (o cualquier cosa dentro del li)
+        if (e.target.closest('.nav-links li')) {
+            setTimeout(() => {
+                navLinks.classList.remove('active');
+            }, 150); // Pequeño retraso para que se note el clic
         }
-        // 2. Si pulsas fuera del menú (en la zona transparente), se cierra
-        // Pero no si pulsas el propio botón de abrir (porque para eso ya está la función toggle)
+        // Si pulsamos fuera del menú y no es el botón de hamburguesa
         else if (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) {
             navLinks.classList.remove('active');
         }
