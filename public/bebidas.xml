@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="bebidas.xslt"?>
+<elixires>
+    <bebida categoria="CÓCTELES NEÓN">
+        <nombre>SANGRE DE MEDUSA</nombre>
+        <descripcion>Vodka premium, licor de mora, zumo de lima y sirope de violeta. Brilla en la oscuridad.</descripcion>
+        <precio>9.50</precio>
+        <imagen>img/bebida1.png</imagen>
+    </bebida>
+    <bebida categoria="CÓCTELES NEÓN" sugerencia="si">
+        <nombre>LÁGRIMAS DE POSEIDÓN</nombre>
+        <descripcion>Ginebra, Blue Curaçao, tónica premium y espuma de cítricos canarios.</descripcion>
+        <precio>10.00</precio>
+        <imagen>img/bebida2.png</imagen>
+    </bebida>
+    <bebida categoria="CÓCTELES NEÓN">
+        <nombre>FUEGO DE HEFESTO</nombre>
+        <descripcion>Ron añejo, maracuyá, sirope de chile y jengibre ahumado. Picante y potente.</descripcion>
+        <precio>11.00</precio>
+        <imagen>img/bebida3.png</imagen>
+    </bebida>
+</elixires>

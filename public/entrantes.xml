@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="entrantes.xslt"?>
+<ofrendas>
+    <plato categoria="ENTRANTES SAGRADOS" sugerencia="si">
+        <nombre>EL RAYO DE ZEUS</nombre>
+        <descripcion>Nachos crujientes bañados en tres quesos fundidos, jalapeños y pico de gallo.</descripcion>
+        <precio>8.50</precio>
+        <imagen>img/entrante1.png</imagen>
+    </plato>
+
+    <plato categoria="PARA PICAR">
+        <nombre>LAS ALAS DE HERMES</nombre>
+        <descripcion>Alitas de pollo marinadas en salsa barbacoa neón y un toque de miel del Olimpo.</descripcion>
+        <precio>7.00</precio>
+        <imagen>img/entrante2.png</imagen>
+    </plato>
+
+    <plato categoria="CRUJIENTE" sugerencia="si">
+        <nombre>EL ESCUDO DE ATENEA</nombre>
+        <descripcion>Aros de cebolla gigantes rebozados en panko con salsa tártara casera.</descripcion>
+        <precio>6.00</precio>
+        <imagen>img/entrante3.png</imagen>
+    </plato>
+</ofrendas>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="estilo.xslt"?>
+<hamburgueseria>
+    <hamburguesa categoria="MONSTRUOS" sugerencia="si">
+        <nombre>MEDUSA</nombre>
+        <autor>Chef Gorgona</autor>
+        <precio>12.90</precio>
+        <descripcion>Te petrificará. Pan negro de carbón con "tentáculos" de calamar...</descripcion>
+        <frecuencia>Baja</frecuencia>
+        <imagen>img/burger1.png</imagen>
+    </hamburguesa>
+
+    <hamburguesa categoria="DIOSES">
+        <nombre>LA OLIMPO</nombre>
+        <autor>Chef Zeus</autor>
+        <precio>10.90</precio>
+        <descripcion>Ternera madurada 45 días con corona de oro líquido (cheddar premium) y rayos de bacon crujiente.</descripcion>
+        <frecuencia>Alta</frecuencia>
+        <imagen>img/burger2.png</imagen>
+    </hamburguesa>
+
+    <hamburguesa categoria="INFRAMUNDO">
+        <nombre>HADES</nombre>
+        <autor>Chef Caronte</autor>
+        <precio>9.90</precio>
+        <descripcion>Directa al infierno. Doble smash burger, mermelada de higos negros y pan de ceniza ahumado.</descripcion>
+        <frecuencia>Media</frecuencia>
+        <imagen>img/burger2.jpg</imagen>
+    </hamburguesa>
+
+    <hamburguesa categoria="DIOSES">
+        <nombre>ATENEA</nombre>
+        <autor>Chef Partenón</autor>
+        <precio>11.90</precio>
+        <descripcion>La elección sabia. Queso de cabra, miel artesanal y nueces sobre ternera a la parrilla.</descripcion>
+        <frecuencia>Baja</frecuencia>
+        <imagen>img/burger3.png</imagen>
+    </hamburguesa>
+
+    <plato categoria="ENTRANTES SAGRADOS" sugerencia="si">
+        <nombre>EL RAYO DE ZEUS</nombre>
+        <descripcion>Nachos crujientes bañados en tres quesos fundidos, jalapeños y pico de gallo.</descripcion>
+        <precio>8.50</precio>
+        <imagen>img/entrante1.png</imagen>
+    </plato>
+
+    <hamburguesa categoria="TITANES" sugerencia="si">
+        <nombre>TITÁN</nombre>
+        <autor>Chef Cronos</autor>
+        <precio>11.90</precio>
+        <descripcion>Doble carne de Angus, aros de cebolla colosales y salsa barbacoa secreta de los tiempos.</descripcion>
+        <frecuencia>Alta</frecuencia>
+        <imagen>img/burger5.png</imagen>
+    </hamburguesa>
+
+    <bebida categoria="CÓCTELES NEÓN" sugerencia="si">
+        <nombre>LÁGRIMAS DE POSEIDÓN</nombre>
+        <descripcion>Ginebra, Blue Curaçao, tónica premium y espuma de cítricos canarios.</descripcion>
+        <precio>10.00</precio>
+        <imagen>img/bebida2.png</imagen>
+    </bebida>
+
+    <postre categoria="CHOCOLATE" sugerencia="si">
+        <nombre>EL PECADO DE HADES</nombre>
+        <descripcion>Muerte por chocolate: bizcocho húmedo, mousse y virutas de chocolate 70%.</descripcion>
+        <precio>7.00</precio>
+        <imagen>img/postre2.png</imagen>
+    </postre>
+
+    <contacto>
+        <direccion>Calle Chineguas 185, Tenerife</direccion>
+        <horario>Miércoles - Domingo | 13:00 - 00:00</horario>
+        <telefono>672863340</telefono>
+        <mapa_url>https://goo.gl/maps/tu_enlace_aqui</mapa_url>
+    </contacto>
+</hamburgueseria>

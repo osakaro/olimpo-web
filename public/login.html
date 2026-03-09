@@ -1,0 +1,35 @@
+<div id="modal-login" class="neon-modal">
+    <span class="close-modal" onclick="window.cerrarLogin()" 
+          style="position: absolute; top: 15px; right: 20px; font-size: 20px; color: #666; cursor: pointer;">X</span>
+    
+    <h1 class="modal-title">ACCESO AL OLIMPO</h1>
+    
+    <p class="slogan-god">Identifícate para reclamar tu banquete</p>
+    
+    <form id="form-login" class="registro-form">
+        <input type="email" id="login-email" placeholder="CORREO ELECTRÓNICO" required />
+        <input type="password" id="login-pass" placeholder="CONTRASEÑA" required />
+        
+        <button type="submit" class="unirse-btn">ENTRAR AL BANQUETE</button>
+    </form>
+</div>
+
+<style>
+    /* Estilos mínimos para asegurar que el modal se comporte igual que el de registro */
+    #modal-login {
+        display: none; 
+        position: fixed; 
+        z-index: 9999; 
+        left: 0; top: 0;
+        width: 100%; height: 100%; 
+        background: rgba(0,0,0,0.85);
+        backdrop-filter: blur(5px);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    #modal-login.open {
+        display: block;
+        opacity: 1;
+    }
+</style>

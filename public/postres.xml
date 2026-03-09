@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="postres.xslt"?>
+<ambrosia>
+    <postre categoria="TARTAS SACRAS">
+        <nombre>EL TESORO DE AFRODITA</nombre>
+        <descripcion>Tarta de queso cremosa con mermelada de frutos rojos del bosque sagrado.</descripcion>
+        <precio>6.50</precio>
+        <imagen>img/postre1.png</imagen>
+    </postre>
+    <postre categoria="CHOCOLATE" sugerencia="si">
+        <nombre>EL PECADO DE HADES</nombre>
+        <descripcion>Muerte por chocolate: bizcocho húmedo, mousse y virutas de chocolate 70%.</descripcion>
+        <precio>7.00</precio>
+        <imagen>img/postre2.png</imagen>
+    </postre>
+    <postre categoria="REFRESCANTE">
+        <nombre>NÉCTAR DEL OLIMPO</nombre>
+        <descripcion>Copa de helado artesano de vainilla de Tahití con caramelo salado y nueces.</descripcion>
+        <precio>5.50</precio>
+        <imagen>img/postre3.png</imagen>
+    </postre>
+</ambrosia>

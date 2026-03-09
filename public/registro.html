@@ -1,0 +1,81 @@
+<div id="modal-registro" class="neon-modal">
+    <span class="close-modal" onclick="cerrarRegistro()">X</span>
+    
+    <h1 class="modal-title">REGISTRO DE MORTALES</h1>
+    
+    <p class="slogan-god">Únete al banquete de los Dioses</p>
+    
+    <form id="form-registro" class="registro-form">
+        <input type="text" id="reg-nombre" placeholder="NOMBRE COMPLETO" required />
+        <input type="email" id="reg-email" placeholder="CORREO ELECTRÓNICO" required />
+        <input type="password" id="reg-pass" placeholder="CONTRASEÑA" required />
+        <input type="text" id="reg-direccion" placeholder="DIRECCIÓN DE ENTREGA" required />
+        
+        <button type="submit" class="unirse-btn">UNIRSE AL OLIMPO</button>
+    </form>
+</div>
+
+<style>
+    /* Estilos específicos para el modal neón */
+    .modal {
+        display: none; 
+        position: fixed; 
+        z-index: 9999; 
+        left: 0; top: 0;
+        width: 100%; height: 100%; 
+        background: rgba(0,0,0,0.85);
+        backdrop-filter: blur(5px);
+    }
+    .modal-content {
+        background: #050505; 
+        border: 2px solid var(--cyan); 
+        margin: 10% auto;
+        padding: 40px; 
+        width: 90%;
+        max-width: 400px; 
+        border-radius: 20px; 
+        text-align: center;
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+        position: relative;
+    }
+    .modal-content input {
+        width: 100%; 
+        padding: 15px; 
+        margin: 12px 0; 
+        background: #111;
+        border: 1px solid #333; 
+        color: #fff; 
+        border-radius: 8px;
+        box-sizing: border-box;
+    }
+    .modal-content input:focus {
+        border-color: var(--pink);
+        box-shadow: 0 0 10px var(--pink);
+        outline: none;
+    }
+    .btn-enviar-olimpo {
+        width: 100%;
+        padding: 15px;
+        background: transparent;
+        border: 2px solid var(--cyan);
+        color: var(--cyan);
+        font-family: 'Arial Black', sans-serif;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 20px;
+    }
+    .btn-enviar-olimpo:hover {
+        background: var(--cyan);
+        color: #000;
+        box-shadow: 0 0 20px var(--cyan);
+    }
+    .close-modal {
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        color: #666;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    .close-modal:hover { color: var(--pink); }
+</style>

@@ -1,0 +1,12 @@
+<!ELEMENT hamburgueseria (hamburguesa+)>
+
+<!ELEMENT hamburguesa (nombre, autor, precio, descripcion, frecuencia, imagen)>
+
+<!ATTLIST hamburguesa categoria CDATA #REQUIRED>
+
+<!ELEMENT nombre (#PCDATA)>
+<!ELEMENT autor (#PCDATA)>
+<!ELEMENT precio (#PCDATA)>
+<!ELEMENT descripcion (#PCDATA)>
+<!ELEMENT frecuencia (#PCDATA)>
+<!ELEMENT imagen (#PCDATA)>
