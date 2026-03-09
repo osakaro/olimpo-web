@@ -79,7 +79,6 @@ app.post('/registro', async (req, res) => {
     } finally { if (connection) await connection.end(); }
 });
 
-JavaScript
 const path = require('path');
 
 // Esto le dice a Express que sirva todos tus archivos (CSS, JS, XML, etc.)
