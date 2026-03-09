@@ -1049,11 +1049,9 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     .nav-links.active { display: flex !important; }
 
     /* Esto obliga a que el contenedor deje salir al menú */
-    .nav-wrapper, .navbar, header {
-        overflow: visible !important;
-        height: auto !important;
-        min-height: 70px; /* Mantén el tamaño de la barra pero deja que "crezca" */
-    }
+    .navbar, .nav-wrapper {
+    overflow: visible !important;
+}
 
     /* 3. LA CARTA: Convertimos el Slider en Lista Vertical */
     .menu-god {
@@ -1107,9 +1105,10 @@ body, .body-entrantes, .body-bebidas, .body-postres {
    MENU DESPLEGABLE DEL USUARIO (DISEÑO FINAL LIMPIO)
    ========================================================================== */
 .user-dropdown {
-    overflow: visible !important;
-    position: relative;
-    z-index: 10010 !important; /* Asegúrate de que vuele sobre la línea rosa */
+    position: relative; 
+    display: inline-flex;
+    align-items: center;
+    overflow: visible !important; /* Vital para que el menú salga del recuadro */
 }
 
 /* El nombre que se pulsa */
@@ -1136,13 +1135,24 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 .dropdown-user-content {
     display: none;
     position: absolute;
-    top: 100%; /* Justo debajo del texto */
-    right: 0;
-    z-index: 10020 !important; /* Prioridad máxima */
-    background: #000 !important;
+    /* Centrado respecto al nombre */
+    top: 100%; 
+    right: 0; 
+    margin-top: 10px;
+    
+    background-color: #000 !important;
+    min-width: 180px;
     border: 2px solid var(--cyan);
     box-shadow: 0 0 15px var(--cyan);
-    overflow: visible !important;
+    border-radius: 10px;
+    padding: 5px 0;
+    
+    /* Z-index altísimo para que pase por ENCIMA de la línea rosa */
+    z-index: 99999 !important; 
+}
+
+.dropdown-user-content.show {
+    display: block !important;
 }
 
 .dropdown-user-content a {
@@ -1170,6 +1180,15 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     display: block !important;
 }
 
+/* Esto quita el límite que corta el menú hacia abajo */
+.navbar, 
+.nav-links, 
+.nav-wrapper, 
+header.hero {
+    overflow: visible !important; 
+    height: auto !important; 
+    min-height: 70px; /* Mantén el tamaño pero deja que el menú cuelgue */
+}
 /* Pequeña animación de entrada */
 @keyframes aparecerDropdown {
     from { opacity: 0; transform: translateY(-10px); }

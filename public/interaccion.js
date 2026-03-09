@@ -159,7 +159,7 @@ function verificarSesion() {
             const dropdown = document.createElement('div');
             dropdown.className = 'user-dropdown';
             dropdown.innerHTML = `
-                <span onclick="toggleUserMenu()" style="color: var(--cyan); font-weight: bold; cursor: pointer; font-family: 'Arial Black'; font-size: 0.9rem;">
+                <span onclick="toggleUserMenu(event)" style="color: var(--cyan); font-weight: bold; cursor: pointer; font-family: 'Arial Black'; font-size: 0.9rem;">
                     ⚡ ${nombreUsuario.toUpperCase()} ▼
                 </span>
                 <div id="userMenu" class="dropdown-user-content">
@@ -481,42 +481,23 @@ window.toggleMobileMenu = function() {
 };
 
 // 2. Función para el Dropdown de Usuario
-window.toggleUserMenu = function() {
+window.toggleUserMenu = function(event) {
+    if (event) event.stopPropagation(); // ¡ESTO ES CLAVE!
     const userMenu = document.getElementById('userMenu');
-    const navLinks = document.querySelector('.nav-links');
-
     if (userMenu) {
-        // ANTES DE ABRIR, CERRAMOS EL MENÚ MÓVIL
-        navLinks?.classList.remove('active');
-        
-        // Togleamos el menú de usuario
+        // Cerramos el menú móvil si está abierto para no solapar
+        document.querySelector('.nav-links')?.classList.remove('active');
         userMenu.classList.toggle('show');
     }
 };
 
-// Escuchador global para cerrar el menú al interactuar con cualquier otra cosa
+// Limpiador: Si haces clic en cualquier otro sitio, cerramos el menú
 document.addEventListener('click', (e) => {
-    const navLinks = document.querySelector('.nav-links');
-    const menuBtn = document.querySelector('.menu-toggle');
     const userMenu = document.getElementById('userMenu');
     const userDropdown = document.querySelector('.user-dropdown');
-
-    // 1. LÓGICA PARA EL MENÚ MÓVIL (HAMBURGUESA)
-    if (navLinks && navLinks.classList.contains('active')) {
-        if (
-            e.target.closest('.nav-links a') || 
-            e.target.closest('[onclick*="toggleCart"]') || 
-            e.target.closest('.user-access') || 
-            (!navLinks.contains(e.target) && !menuBtn.contains(e.target))
-        ) {
-            navLinks.classList.remove('active');
-        }
-    }
-
-    // 2. LÓGICA PARA EL MENÚ DE USUARIO (OSCAR CASANOVA)
+    
     if (userMenu && userMenu.classList.contains('show')) {
-        // CAMBIO AQUÍ: Solo cerramos si el clic NO es en el nombre ni en el menú
-        if (!userDropdown.contains(e.target)) {
+        if (userDropdown && !userDropdown.contains(e.target)) {
             userMenu.classList.remove('show');
         }
     }
