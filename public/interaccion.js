@@ -147,6 +147,14 @@ window.vaciarCarrito = function() {
 /* ==========================================================================
    4. SISTEMA DE USUARIO Y AUTENTICACIÓN
    ========================================================================== */
+window.toggleMobileMenu = function() {
+    console.log("Menú pulsado");
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks) {
+        navLinks.classList.toggle('active');
+    }
+};
+
 function verificarSesion() {
     const nombreUsuario = localStorage.getItem('mortal_nombre');
     const contenedores = document.querySelectorAll('.nav-wrapper');

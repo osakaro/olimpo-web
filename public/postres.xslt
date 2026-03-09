@@ -18,6 +18,11 @@
                 <h1 class="nav-title">
                     <span class="t-rosa">LA</span> <span class="t-azul">AMBROSÍA</span>
                 </h1>
+                 <div class="menu-toggle" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
                 <div class="nav-links">
                     <div class="nav-wrapper" style="display: flex; align-items: center; gap: 15px;">
                         <div class="dropdown">
