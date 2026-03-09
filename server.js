@@ -86,7 +86,7 @@ app.use(express.static(path.join(__dirname, '')));
 
 // Esto sirve tu archivo principal (XML o HTML)
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.xml')); 
+    res.sendFile(path.join(__dirname, 'hamburgueseria.xml')); 
 });
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
