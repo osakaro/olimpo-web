@@ -504,10 +504,10 @@ document.addEventListener('click', (e) => {
     // 1. LÓGICA PARA EL MENÚ MÓVIL (HAMBURGUESA)
     if (navLinks && navLinks.classList.contains('active')) {
         if (
-            e.target.closest('.nav-links a') ||           // Pulsas un enlace
-            e.target.closest('[onclick*="toggleCart"]') || // Pulsas carrito
-            e.target.closest('.user-access') ||           // Pulsas Entrar/Únete
-            (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) // Pulsas fuera
+            e.target.closest('.nav-links a') || 
+            e.target.closest('[onclick*="toggleCart"]') || 
+            e.target.closest('.user-access') || 
+            (!navLinks.contains(e.target) && !menuBtn.contains(e.target))
         ) {
             navLinks.classList.remove('active');
         }
@@ -515,8 +515,8 @@ document.addEventListener('click', (e) => {
 
     // 2. LÓGICA PARA EL MENÚ DE USUARIO (OSCAR CASANOVA)
     if (userMenu && userMenu.classList.contains('show')) {
-        // Si pulsas fuera del nombre de usuario y del menú desplegable, se cierra
-        if (!userDropdown || !userDropdown.contains(e.target)) {
+        // CAMBIO AQUÍ: Solo cerramos si el clic NO es en el nombre ni en el menú
+        if (!userDropdown.contains(e.target)) {
             userMenu.classList.remove('show');
         }
     }

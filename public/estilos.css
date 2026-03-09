@@ -1048,10 +1048,11 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 
     .nav-links.active { display: flex !important; }
 
-    .nav-wrapper {
-        flex-direction: column !important;
-        gap: 25px !important;
-        width: 100%;
+    /* Esto obliga a que el contenedor deje salir al menú */
+    .nav-wrapper, .navbar, header {
+        overflow: visible !important;
+        height: auto !important;
+        min-height: 70px; /* Mantén el tamaño de la barra pero deja que "crezca" */
     }
 
     /* 3. LA CARTA: Convertimos el Slider en Lista Vertical */
@@ -1106,12 +1107,9 @@ body, .body-entrantes, .body-bebidas, .body-postres {
    MENU DESPLEGABLE DEL USUARIO (DISEÑO FINAL LIMPIO)
    ========================================================================== */
 .user-dropdown {
+    overflow: visible !important;
     position: relative;
-    display: inline-block;
-    vertical-align: middle;
-    /* Aseguramos que el contenedor no corte el dropdown */
-    overflow: visible !important; 
-    height: auto !important;
+    z-index: 10010 !important; /* Asegúrate de que vuele sobre la línea rosa */
 }
 
 /* El nombre que se pulsa */
@@ -1138,26 +1136,13 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 .dropdown-user-content {
     display: none;
     position: absolute;
+    top: 100%; /* Justo debajo del texto */
     right: 0;
-    /* top: 100% lo pone justo debajo del nombre, margin-top da el aire */
-    top: 100%; 
-    margin-top: 10px; 
-
-    background-color: #000 !important;
-    min-width: 180px;
+    z-index: 10020 !important; /* Prioridad máxima */
+    background: #000 !important;
     border: 2px solid var(--cyan);
     box-shadow: 0 0 15px var(--cyan);
-    
-    /* Z-index alto para estar sobre todo, incluso sobre el fondo del menú móvil */
-    z-index: 10005 !important; 
-    
-    border-radius: 10px;
-    padding: 5px 0;
-
-    /* ESTO ELIMINA EL CORTE Y EL SCROLL */
-    overflow: visible !important; 
-    height: auto !important;
-    max-height: none !important;
+    overflow: visible !important;
 }
 
 .dropdown-user-content a {
@@ -1182,7 +1167,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 }
 
 .dropdown-user-content.show {
-    display: block;
+    display: block !important;
 }
 
 /* Pequeña animación de entrada */
