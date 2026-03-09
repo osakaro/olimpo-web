@@ -147,22 +147,6 @@ window.vaciarCarrito = function() {
 /* ==========================================================================
    4. SISTEMA DE USUARIO Y AUTENTICACIÓN
    ========================================================================== */
-window.toggleMobileMenu = function() {
-    const navLinks = document.querySelector('.nav-links');
-    if (navLinks) {
-        navLinks.classList.toggle('active');
-    }
-};
-
-// NUEVO: Cerrar el menú automáticamente al hacer clic en cualquier enlace
-document.addEventListener('click', (e) => {
-    const navLinks = document.querySelector('.nav-links');
-    // Si el menú está abierto y pulsamos un enlace de dentro...
-    if (navLinks && navLinks.classList.contains('active') && e.target.closest('.nav-links a')) {
-        navLinks.classList.remove('active');
-    }
-});
-
 function verificarSesion() {
     const nombreUsuario = localStorage.getItem('mortal_nombre');
     const contenedores = document.querySelectorAll('.nav-wrapper');
@@ -476,7 +460,29 @@ window.onload = () => {
     configurarEnvioRegistro();
 };
 
-function toggleMobileMenu() {
+// Función para abrir/cerrar manual (la que ya tienes)
+window.toggleMobileMenu = function() {
     const navLinks = document.querySelector('.nav-links');
-    navLinks.classList.toggle('active');
-}
+    if (navLinks) {
+        navLinks.classList.toggle('active');
+    }
+};
+
+// CERRAR AUTOMÁTICAMENTE
+document.addEventListener('click', (e) => {
+    const navLinks = document.querySelector('.nav-links');
+    const menuBtn = document.querySelector('.menu-toggle');
+
+    // Si el menú está abierto...
+    if (navLinks && navLinks.classList.contains('active')) {
+        // 1. Si pulsas un enlace de dentro del menú, se cierra
+        if (e.target.closest('.nav-links a')) {
+            navLinks.classList.remove('active');
+        }
+        // 2. Si pulsas fuera del menú (en la zona transparente), se cierra
+        // Pero no si pulsas el propio botón de abrir (porque para eso ya está la función toggle)
+        else if (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) {
+            navLinks.classList.remove('active');
+        }
+    }
+});
