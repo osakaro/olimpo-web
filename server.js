@@ -7,10 +7,15 @@ app.use(cors());
 app.use(express.json()); 
 
 const dbConfig = {
-    host: 'localhost',
-    user: 'root',
-    password: 'oscar@@@006FUL',
-    database: 'olimpo_db'
+    host: 'gateway01.eu-central-1.prod.aws.tidbcloud.com',
+    user: '5rTWHdrTkzJQtt1.root',
+    password: '8CveIRqStOFIzR9l',
+    database: 'test',
+    port: 4000,
+    ssl: {
+        minVersion: 'TLSv1.2',
+        rejectUnauthorized: true
+    }
 };
 
 // LOGIN
@@ -74,8 +79,10 @@ app.post('/registro', async (req, res) => {
         connection = await mysql.createConnection(dbConfig);
         await connection.execute("INSERT INTO usuarios (nombre, email, password, direccion, puntos) VALUES (?, ?, ?, ?, 0)", [nombre, email, password, direccion]);
         res.json({ mensaje: "MORTAL REGISTRADO" });
-    } catch (error) {
-        res.status(500).json({ mensaje: "EMAIL YA EXISTENTE" });
+  } catch (error) {
+    console.error(error); // Esto imprime el error en la consola de Render para que tú lo veas
+    res.status(500).json({ mensaje: "ERROR DB: " + error.message });
+
     } finally { if (connection) await connection.end(); }
 });
 
