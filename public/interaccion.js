@@ -148,12 +148,20 @@ window.vaciarCarrito = function() {
    4. SISTEMA DE USUARIO Y AUTENTICACIÓN
    ========================================================================== */
 window.toggleMobileMenu = function() {
-    console.log("Menú pulsado");
     const navLinks = document.querySelector('.nav-links');
     if (navLinks) {
         navLinks.classList.toggle('active');
     }
 };
+
+// NUEVO: Cerrar el menú automáticamente al hacer clic en cualquier enlace
+document.addEventListener('click', (e) => {
+    const navLinks = document.querySelector('.nav-links');
+    // Si el menú está abierto y pulsamos un enlace de dentro...
+    if (navLinks && navLinks.classList.contains('active') && e.target.closest('.nav-links a')) {
+        navLinks.classList.remove('active');
+    }
+});
 
 function verificarSesion() {
     const nombreUsuario = localStorage.getItem('mortal_nombre');
