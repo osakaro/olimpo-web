@@ -850,13 +850,15 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.95); border: 2px solid var(--cyan);
     color: #fff; padding: 15px 30px; border-radius: 10px;
-    box-shadow: var(--glow-c); z-index: 9999;
+    box-shadow: var(--glow-c); z-index: 20000;
     transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     text-transform: uppercase; font-family: 'Arial Black', sans-serif;
     display: flex; align-items: center; gap: 10px;
 }
 
-.notification.show { top: 40px; }
+.notification.show {
+    top: 85px !important; /* Baja lo suficiente para librar la navbar (70px + 15px de aire) */
+}
 .notification.rosa { border-color: var(--pink); box-shadow: var(--glow-p); }
 
 /* --- GRAFFITIS --- */
@@ -1135,14 +1137,21 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     position: absolute;
     right: 0;
     top: 100%;
-    background-color: #000 !important; /* Fondo negro puro siempre */
+    background-color: #000 !important;
     min-width: 180px;
     border: 2px solid var(--cyan);
     box-shadow: 0 0 15px var(--cyan);
-    z-index: 1000;
+    
+    /* CAMBIO CLAVE: Sube el z-index para estar sobre todo lo demás */
+    z-index: 10005 !important; 
+    
     border-radius: 10px;
     margin-top: 15px;
     padding: 5px 0;
+
+    /* CAMBIO CLAVE: Evita que aparezcan barras de scroll */
+    overflow: visible !important; 
+    height: auto !important; 
 }
 
 .dropdown-user-content a {
