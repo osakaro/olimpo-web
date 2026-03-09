@@ -1510,18 +1510,20 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Forzamos la fuente Orbitron en todos los textos del login/registro */
+/* Forzar fuente en los textos del modal de acceso */
 .modal-content h2, 
 .modal-content p, 
-.modal-content span,
-.modal-content label {
+.modal-content b,
+.modal-content .entrar-txt,
+.modal-content .unete-txt {
     font-family: 'Orbitron', sans-serif !important;
     text-transform: uppercase !important;
-    letter-spacing: 1px !important;
+    color: #fff !important;
+    text-shadow: 0 0 5px var(--cyan);
 }
 
-/* Si esos textos específicos tienen una clase, la forzamos así: */
-.unete-txt, .identificate-txt {
+/* Ajuste específico para los botones de texto bajo el Zeus */
+.user-access span {
     font-family: 'Orbitron', sans-serif !important;
-    font-size: 0.9rem !important;
+    font-size: 0.8rem !important;
 }
