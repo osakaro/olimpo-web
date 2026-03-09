@@ -1388,3 +1388,46 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     border-color: var(--pink);
     box-shadow: 0 0 10px var(--pink);
 }
+
+/* Esto va al final de estilos.css */
+
+/* 1. Estilo base del botón (oculto en PC) */
+.menu-toggle {
+    display: none; 
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 30px;
+    height: 4px;
+    background-color: var(--cyan);
+    box-shadow: var(--glow-c);
+    border-radius: 2px;
+}
+
+/* 2. Configuración para MÓVIL */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex; /* Aparece el botón */
+    }
+
+    .nav-links {
+        display: none; /* Escondemos el menú horizontal */
+        position: absolute;
+        top: 70px;
+        right: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        flex-direction: column;
+        text-align: center;
+        border-bottom: 2px solid var(--pink);
+    }
+
+    /* Esta clase la pone el JS al hacer click */
+    .nav-links.active {
+        display: flex; 
+    }
+}
