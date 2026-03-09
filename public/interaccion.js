@@ -468,20 +468,15 @@ window.toggleMobileMenu = function() {
     }
 };
 
-// CERRAR AL PULSAR ENLACE O FUERA
+// CERRAR MENÚ AL TOCAR CUALQUIER COSA DENTRO O FUERA
 document.addEventListener('click', (e) => {
     const navLinks = document.querySelector('.nav-links');
     const menuBtn = document.querySelector('.menu-toggle');
 
     if (navLinks && navLinks.classList.contains('active')) {
-        // Si pulsamos un enlace (o cualquier cosa dentro del li)
-        if (e.target.closest('.nav-links li')) {
-            setTimeout(() => {
-                navLinks.classList.remove('active');
-            }, 150); // Pequeño retraso para que se note el clic
-        }
-        // Si pulsamos fuera del menú y no es el botón de hamburguesa
-        else if (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) {
+        // Si haces clic en cualquier sitio que NO sea el botón de abrir o el interior del menú
+        // O si haces clic específicamente en un enlace del menú
+        if (e.target.closest('.nav-links a') || (!navLinks.contains(e.target) && !menuBtn.contains(e.target))) {
             navLinks.classList.remove('active');
         }
     }
