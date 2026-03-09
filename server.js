@@ -20,14 +20,12 @@ const dbConfig = {
     }
 };
 
-// --- SERVIR ARCHIVOS ESTÁTICOS ---
-// Esta línea es CRUCIAL: le dice a Render que busque los archivos en la raíz del proyecto
-app.use(express.static(__dirname));
+// 1. Esto busca el CSS y las imágenes dentro de la carpeta public
+app.use(express.static(path.join(__dirname, 'public')));
 
-// --- RUTA PRINCIPAL ---
-// Cuando alguien entra a olimpo-web.onrender.com, le enviamos el XML
+// 2. Esto envía el archivo XML que está dentro de public al entrar a la web
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'hamburgueseria.xml')); 
+    res.sendFile(path.join(__dirname, 'public', 'hamburgueseria.xml')); 
 });
 
 // --- RUTAS DE API ---
