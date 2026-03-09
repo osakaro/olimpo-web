@@ -1108,8 +1108,10 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 .user-dropdown {
     position: relative;
     display: inline-block;
-    margin-left: 20px; /* Un poco más de aire */
     vertical-align: middle;
+    /* Aseguramos que el contenedor no corte el dropdown */
+    overflow: visible !important; 
+    height: auto !important;
 }
 
 /* El nombre que se pulsa */
@@ -1132,26 +1134,30 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 
 /* El contenedor del menú (Dropdown) */
 /* --- ESTILO LIMPIO PARA EL MENÚ DESPLEGABLE --- */
+/* El contenedor del menú (Dropdown) */
 .dropdown-user-content {
     display: none;
     position: absolute;
     right: 0;
-    top: 100%;
+    /* top: 100% lo pone justo debajo del nombre, margin-top da el aire */
+    top: 100%; 
+    margin-top: 10px; 
+
     background-color: #000 !important;
     min-width: 180px;
     border: 2px solid var(--cyan);
     box-shadow: 0 0 15px var(--cyan);
     
-    /* CAMBIO CLAVE: Sube el z-index para estar sobre todo lo demás */
+    /* Z-index alto para estar sobre todo, incluso sobre el fondo del menú móvil */
     z-index: 10005 !important; 
     
     border-radius: 10px;
-    margin-top: 15px;
     padding: 5px 0;
 
-    /* CAMBIO CLAVE: Evita que aparezcan barras de scroll */
+    /* ESTO ELIMINA EL CORTE Y EL SCROLL */
     overflow: visible !important; 
-    height: auto !important; 
+    height: auto !important;
+    max-height: none !important;
 }
 
 .dropdown-user-content a {

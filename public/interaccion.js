@@ -461,18 +461,36 @@ window.onload = () => {
 };
 
 // Función para abrir/cerrar manual (la que ya tienes)
-/* ==========================================================================
-   SISTEMA DE MENÚ MÓVIL (ULTRA-COMPATIBLE)
-   ========================================================================== */
 
 /* ==========================================================================
-   SISTEMA DE MENÚ MÓVIL (COMPATIBLE CON CARRITO)
+   GESTIÓN DE MENÚS INTELIGENTE (EVITAR CONFLICTOS)
    ========================================================================== */
 
+// 1. Función para el Menú Móvil (Hamburguesa)
 window.toggleMobileMenu = function() {
     const navLinks = document.querySelector('.nav-links');
+    const userMenu = document.getElementById('userMenu');
+
     if (navLinks) {
+        // ANTES DE ABRIR, CERRAMOS EL MENÚ DE USUARIO
+        userMenu?.classList.remove('show');
+        
+        // Togleamos el menú móvil
         navLinks.classList.toggle('active');
+    }
+};
+
+// 2. Función para el Dropdown de Usuario
+window.toggleUserMenu = function() {
+    const userMenu = document.getElementById('userMenu');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (userMenu) {
+        // ANTES DE ABRIR, CERRAMOS EL MENÚ MÓVIL
+        navLinks?.classList.remove('active');
+        
+        // Togleamos el menú de usuario
+        userMenu.classList.toggle('show');
     }
 };
 
@@ -480,18 +498,26 @@ window.toggleMobileMenu = function() {
 document.addEventListener('click', (e) => {
     const navLinks = document.querySelector('.nav-links');
     const menuBtn = document.querySelector('.menu-toggle');
+    const userMenu = document.getElementById('userMenu');
+    const userDropdown = document.querySelector('.user-dropdown');
 
-    // Si el menú NO está abierto, no hacemos nada
-    if (!navLinks || !navLinks.classList.contains('active')) return;
+    // 1. LÓGICA PARA EL MENÚ MÓVIL (HAMBURGUESA)
+    if (navLinks && navLinks.classList.contains('active')) {
+        if (
+            e.target.closest('.nav-links a') ||           // Pulsas un enlace
+            e.target.closest('[onclick*="toggleCart"]') || // Pulsas carrito
+            e.target.closest('.user-access') ||           // Pulsas Entrar/Únete
+            (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) // Pulsas fuera
+        ) {
+            navLinks.classList.remove('active');
+        }
+    }
 
-    // CERRAMOS EL MENÚ SI PULSAS:
-    if (
-        e.target.closest('.nav-links a') ||           // 1. Un enlace del menú
-        e.target.closest('[onclick*="toggleCart"]') || // 2. El botón del carrito (por su función)
-        e.target.closest('#cart-icon') ||              // 3. El icono del carrito por ID
-        e.target.closest('.user-access') ||           // 4. Entrar / Únete
-        (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) // 5. Fuera de todo
-    ) {
-        navLinks.classList.remove('active');
+    // 2. LÓGICA PARA EL MENÚ DE USUARIO (OSCAR CASANOVA)
+    if (userMenu && userMenu.classList.contains('show')) {
+        // Si pulsas fuera del nombre de usuario y del menú desplegable, se cierra
+        if (!userDropdown || !userDropdown.contains(e.target)) {
+            userMenu.classList.remove('show');
+        }
     }
 });
