@@ -1408,26 +1408,91 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     border-radius: 2px;
 }
 
-/* 2. Configuración para MÓVIL */
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: flex; /* Aparece el botón */
-    }
+/* ==========================================================================
+   AJUSTE MÓVIL DEFINITIVO (PANTALLAS < 700px)
+   ========================================================================== */
 
-    .nav-links {
-        display: none; /* Escondemos el menú horizontal */
-        position: absolute;
-        top: 70px;
-        right: 0;
+/* IMPORTANTE: Pon esto arriba del todo de tu CSS para las fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+
+@media (max-width: 700px) {
+    /* 1. NAVBAR: La fijamos arriba para que no se mueva */
+    .navbar {
+        position: fixed !important;
+        top: 0;
+        left: 0;
         width: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        flex-direction: column;
-        text-align: center;
-        border-bottom: 2px solid var(--pink);
+        height: 70px; /* Ajusta a la altura de tu barra */
+        background: #000 !important;
+        z-index: 10000 !important; /* Capa suprema */
+        display: flex;
+        align-items: center;
+        padding: 0 20px !important;
+        border-bottom: 2px solid var(--pink); /* La línea rosa que separa */
+        box-shadow: var(--glow-p);
     }
 
-    /* Esta clase la pone el JS al hacer click */
-    .nav-links.active {
-        display: flex; 
+    /* 2. LOGO Y BOTÓN: Alineación limpia */
+    .logo {
+        font-family: 'Orbitron', sans-serif !important;
+        z-index: 10001;
     }
+
+    .menu-toggle {
+        display: flex !important;
+        z-index: 10001;
+    }
+
+    /* 3. EL MENÚ DESPLEGABLE: Se coloca justo debajo de la línea rosa */
+    .nav-links {
+        display: none; 
+        position: fixed !important; /* Fixed para que no baile al hacer scroll */
+        top: 72px; /* 70px de la barra + 2px de la línea */
+        left: 0;
+        width: 100%;
+        height: auto;
+        background: rgba(0, 0, 0, 0.95) !important;
+        backdrop-filter: blur(10px); /* Efecto cristal ciberpunk */
+        flex-direction: column !important;
+        padding: 30px 0 !important;
+        border-bottom: 3px solid var(--cyan); /* Línea inferior cian para cerrar el menú */
+        box-shadow: var(--glow-c);
+        z-index: 9999 !important; /* Por debajo de la navbar */
+    }
+
+    /* Cuando el menú está abierto */
+    .nav-links.active {
+        display: flex !important;
+        animation: fadeInDown 0.3s ease-out;
+    }
+
+    /* 4. FUENTES Y TEXTOS: Forzamos el estilo neón en móvil */
+    .nav-links li a, 
+    .entrar-txt, 
+    .unete-txt, 
+    button {
+        font-family: 'Orbitron', sans-serif !important; /* Cambia a tu fuente si no es Orbitron */
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #fff !important;
+    }
+
+    /* Separación de los links en vertical */
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+        margin: 15px 0 !important;
+    }
+
+    /* Ajuste para que el contenido de la web no empiece debajo de la navbar fija */
+    body {
+        padding-top: 80px; 
+    }
+}
+
+/* Animación de entrada */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
