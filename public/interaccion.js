@@ -1,7 +1,7 @@
 /* ==========================================================================
    1. CONFIGURACIÓN, ESTADO GLOBAL Y UTILIDADES
    ========================================================================== */
-const API_URL = 'http://localhost:3000';
+const API_URL = 'https://olimpo-web.onrender.com';
 let carrito = JSON.parse(localStorage.getItem('olimpo_cart')) || [];
 let salirPorIzquierda = true; 
 

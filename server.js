@@ -79,6 +79,17 @@ app.post('/registro', async (req, res) => {
     } finally { if (connection) await connection.end(); }
 });
 
+JavaScript
+const path = require('path');
+
+// Esto le dice a Express que sirva todos tus archivos (CSS, JS, XML, etc.)
+app.use(express.static(path.join(__dirname, '')));
+
+// Esto hace que al entrar a la URL principal, se cargue tu XML o HTML
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.xml')); // O index.html si es el principal
+});
+
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Servidor del Olimpo en el puerto ${PORT}`);
