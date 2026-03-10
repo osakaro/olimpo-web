@@ -1424,7 +1424,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
         z-index: 1 !important;
     }
 
-    .linea { font-size: 1.6rem !important; opacity: 0.3 !important; }
+    .linea { font-size: 1.6rem !important; opacity: 1 !important; }
 
     .slogan-god {
         position: relative !important;

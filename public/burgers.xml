@@ -8,8 +8,7 @@
         <descripcion>Te petrificará. Pan negro de carbón con "tentáculos" de calamar...</descripcion>
         <frecuencia>Baja</frecuencia>
         <imagen>img/burger1.png</imagen>
-        <ingredientes>
-        <item modificable="si">Tentáculos de Calamar</item>
+    <ingredientes>
         <item modificable="si">Cebolla Roja</item>
         <item modificable="si">Alioli</item>
         <item modificable="si">Tomate</item>
@@ -19,7 +18,7 @@
         <suplemento precio="1.50">Extra Queso</suplemento>
         <suplemento precio="1.80">Bacon Crujiente</suplemento>
         <suplemento precio="1.20">Huevo Frito</suplemento>
-        <suplemento precio="3.50">Carne Extra (X3)</suplemento>
+        <suplemento precio="3.50">Carne Extra</suplemento>
     </extras>
     </hamburguesa>
 
@@ -30,6 +29,17 @@
         <descripcion>Ternera madurada 45 días con corona de oro líquido (cheddar premium) y rayos de bacon crujiente.</descripcion>
         <frecuencia>Alta</frecuencia>
         <imagen>img/burger2.png</imagen>
+    <ingredientes>
+        <item modificable="si">Queso Cheddar</item>
+        <item modificable="si">Bacon</item>
+        <item modificable="si">Cebolla</item>
+    </ingredientes>
+    <extras>
+        <suplemento precio="1.50">Extra Queso</suplemento>
+        <suplemento precio="1.80">Bacon Crujiente</suplemento>
+        <suplemento precio="1.20">Huevo Frito</suplemento>
+        <suplemento precio="3.50">Carne Extra</suplemento>
+    </extras>
     </hamburguesa>
 
     <hamburguesa categoria="INFRAMUNDO">
@@ -39,6 +49,17 @@
         <descripcion>Directa al infierno. Doble smash burger, mermelada de higos negros y pan de ceniza ahumado.</descripcion>
         <frecuencia>Media</frecuencia>
         <imagen>img/burger3.png</imagen>
+    <ingredientes>
+        <item modificable="si">Mermelada de Higos</item>
+        <item modificable="si">Queso</item>
+        <item modificable="si">Bacon</item>
+    </ingredientes>
+    <extras>
+        <suplemento precio="1.50">Extra Queso</suplemento>
+        <suplemento precio="1.80">Bacon Crujiente</suplemento>
+        <suplemento precio="1.20">Huevo Frito</suplemento>
+        <suplemento precio="3.50">Carne Extra</suplemento>
+    </extras>
     </hamburguesa>
 
     <hamburguesa categoria="DIOSES">
@@ -48,6 +69,17 @@
         <descripcion>La elección sabia. Queso de cabra, miel artesanal y nueces sobre ternera a la parrilla.</descripcion>
         <frecuencia>Baja</frecuencia>
         <imagen>img/burger4.png</imagen>
+        <ingredientes>
+        <item modificable="si">Queso Cabra</item>
+        <item modificable="si">Miel</item>
+        <item modificable="si">Nueces</item>
+    </ingredientes>
+    <extras>
+        <suplemento precio="1.50">Extra Queso</suplemento>
+        <suplemento precio="1.80">Bacon Crujiente</suplemento>
+        <suplemento precio="1.20">Huevo Frito</suplemento>
+        <suplemento precio="3.50">Carne Extra</suplemento>
+    </extras>
     </hamburguesa>
 
     <hamburguesa categoria="TITANES" sugerencia="si">
@@ -57,6 +89,17 @@
         <descripcion>Doble carne de Angus, aros de cebolla colosales y salsa barbacoa secreta de los tiempos.</descripcion>
         <frecuencia>Alta</frecuencia>
         <imagen>img/burger5.png</imagen>
+        <ingredientes>
+        <item modificable="si">Aros de Cebolla</item>
+        <item modificable="si">Quesa</item>
+        <item modificable="si">Cebolla</item>
+    </ingredientes>
+    <extras>
+        <suplemento precio="1.50">Extra Queso</suplemento>
+        <suplemento precio="1.80">Bacon Crujiente</suplemento>
+        <suplemento precio="1.20">Huevo Frito</suplemento>
+        <suplemento precio="3.50">Carne Extra</suplemento>
+    </extras>
     </hamburguesa>
 
     <hamburguesa categoria="DIOSES">
@@ -66,5 +109,16 @@
         <descripcion>Una ola de sabor. Salmón noruego premium a la parrilla, queso crema con eneldo y rúcula fresca en pan de brioche.</descripcion>
         <frecuencia>Media</frecuencia>
         <imagen>img/burger6.png</imagen>
+        <ingredientes>
+        <item modificable="si">Queso</item>
+        <item modificable="si">Rúcula</item>
+        <item modificable="si">Bacon</item>
+    </ingredientes>
+    <extras>
+        <suplemento precio="1.50">Extra Queso</suplemento>
+        <suplemento precio="1.80">Bacon Crujiente</suplemento>
+        <suplemento precio="1.20">Huevo Frito</suplemento>
+        <suplemento precio="3.50">Pescado Extra</suplemento>
+    </extras>
     </hamburguesa>
 </hamburgueseria>   
