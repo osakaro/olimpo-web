@@ -8,6 +8,19 @@
         <descripcion>Te petrificará. Pan negro de carbón con "tentáculos" de calamar...</descripcion>
         <frecuencia>Baja</frecuencia>
         <imagen>img/burger1.png</imagen>
+        <ingredientes>
+        <item modificable="si">Tentáculos de Calamar</item>
+        <item modificable="si">Cebolla Roja</item>
+        <item modificable="si">Alioli</item>
+        <item modificable="si">Tomate</item>
+        <item modificable="si">Canónigos</item>
+    </ingredientes>
+    <extras>
+        <suplemento precio="1.50">Extra Queso</suplemento>
+        <suplemento precio="1.80">Bacon Crujiente</suplemento>
+        <suplemento precio="1.20">Huevo Frito</suplemento>
+        <suplemento precio="3.50">Carne Extra (X3)</suplemento>
+    </extras>
     </hamburguesa>
 
     <hamburguesa categoria="DIOSES">

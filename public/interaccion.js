@@ -453,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarInterfaz();
     setInterval(lanzarGraffiti, 2500);
 
-    // Carga de fragmentos HTML
+    // Carga de fragmentos HTML (Registro y Login)
     const cargarModal = (id, archivo, callback) => {
         const contenedor = document.getElementById(id);
         if (contenedor) {
@@ -466,31 +466,42 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarModal('contenedor-registro', 'registro.html', configurarEnvioRegistro);
     cargarModal('contenedor-login', 'login.html', configurarEnvioLogin);
 
-    // Slider
+    // Slider de la Home
     const slider = document.getElementById('slider');
     if (slider) {
         document.getElementById('btnNext').onclick = () => slider.scrollBy({ left: 950, behavior: 'smooth' });
         document.getElementById('btnPrev').onclick = () => slider.scrollBy({ left: -950, behavior: 'smooth' });
     }
 
-    // Evento Delegado para compra
+    /* ============================================================
+       EVENTO DELEGADO SIMPLIFICADO
+       ============================================================ */
     document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('card-btn')) {
-            window.reproducirSonido();
-            const card = e.target.closest('.god-card, .bebida-card, .postre-card');
-            if (card) {
-                const nombre = (card.querySelector('h2') || card.querySelector('h3')).innerText;
-                const precioStr = card.querySelector('.card-price').innerText;
-                const precio = parseFloat(precioStr.replace(/[^\d.]/g, ''));
-                const prod = carrito.find(item => item.nombre === nombre);
-                prod ? prod.cantidad++ : carrito.push({ nombre, precio, cantidad: 1 });
-                localStorage.setItem('olimpo_cart', JSON.stringify(carrito));
-                mostrarMensajeDivino(`${nombre} añadido`);
-                actualizarInterfaz();
+    // Buscamos si el clic fue en un botón de pedir
+    if (e.target.classList.contains('card-btn')) {
+        const card = e.target.closest('.god-card, .bebida-card, .postre-card');
+        
+        if (card) {
+            // SACAMOS EL NOMBRE PARA COMPROBAR
+            const nombre = (card.querySelector('h2') || card.querySelector('h3')).innerText.toUpperCase();
+
+            // BLOQUE DE SEGURIDAD:
+            // Si el nombre es MEDUSA (o cualquier burger que vayamos a personalizar),
+            // DETENEMOS el proceso aquí. El onclick del XSLT se ocupará de abrir el modal.
+            if (nombre === "MEDUSA") {
+                console.log("Configurador detectado para " + nombre + ". Deteniendo duplicado.");
+                return; // Salimos de la función y no se añade nada
             }
-        }
-    });
-});
+
+            // Si NO es Medusa, sacamos precio y añadimos normal (bebidas, postres, etc.)
+            const precioStr = card.querySelector('.card-price').innerText;
+            const precio = parseFloat(precioStr.replace(/[^\d.]/g, ''));
+            
+            window.agregarAlCarrito(nombre, precio);
+            }
+        } 
+    }); 
+}); 
 
 window.inicializarSeccionOlimpo = function() {
     verificarSesion();
@@ -543,3 +554,143 @@ document.addEventListener('click', function(event) {
         }
     }
 });
+
+window.agregarAlCarrito = function(nombre, precio) {
+    window.reproducirSonido();
+    
+    // Buscamos si ya existe ese producto exacto (con los mismos extras)
+    const prodExistente = carrito.find(item => item.nombre === nombre);
+    
+    if (prodExistente) {
+        prodExistente.cantidad++;
+    } else {
+        carrito.push({ 
+            nombre: nombre, 
+            precio: parseFloat(precio), 
+            cantidad: 1 
+        });
+    }
+    
+    // Guardamos en LocalStorage y refrescamos la vista
+    localStorage.setItem('olimpo_cart', JSON.stringify(carrito));
+    window.mostrarMensajeDivino(`${nombre} añadido`);
+    window.actualizarInterfaz();
+};
+
+/* --- LÓGICA DE PERSONALIZACIÓN DE BURGERS ---*/
+let currentBurger = { nombre: '', precioBase: 0, total: 0 };
+
+window.abrirConfigurador = (nombre, precio) => {
+    // 1. Guardamos los datos de la burger que hemos pulsado
+    currentBurger.nombre = nombre;
+    currentBurger.precioBase = parseFloat(precio);
+    currentBurger.total = currentBurger.precioBase;
+
+    // 2. Actualizamos el texto del modal
+    document.getElementById('p-nombre').innerText = nombre;
+    document.getElementById('p-total').innerText = currentBurger.total.toFixed(2);
+    
+    // 3. Cargamos los ingredientes (Si es Medusa, cargamos los suyos)
+    if(nombre.toUpperCase() === "MEDUSA") {
+        cargarMedusaUI();
+    } else {
+        // Para las demás burgers mientras no tengan su lista propia
+        document.getElementById('lista-ingredientes').innerHTML = "<p style='color:#666'>Receta estándar</p>";
+        document.getElementById('lista-extras').innerHTML = "<p style='color:#666'>Sin extras disponibles</p>";
+    }
+    
+    // 4. Mostramos el modal con Flex para que se centre
+    document.getElementById('modal-personalizar').style.display = 'flex';
+};
+
+function cargarMedusaUI() {
+    const ingDiv = document.getElementById('lista-ingredientes');
+    const extDiv = document.getElementById('lista-extras');
+
+    // Ingredientes para quitar
+    const ings = ["Tentáculos", "Cebolla Roja", "Alioli"];
+    ingDiv.innerHTML = ings.map(i => `
+        <div style="display:flex; justify-content:space-between; align-items:center; color:white; margin-bottom:12px;">
+            <span style="font-size:0.9rem;">SIN ${i.toUpperCase()}</span>
+            <input type="checkbox" style="width:20px; height:20px; accent-color:var(--cyan);">
+        </div>
+    `).join('');
+
+    // Extras con precio
+    const exts = [
+        {n: "EXTRA QUESO", p: 1.50},
+        {n: "BACON CRUJIENTE", p: 1.80},
+        {n: "CARNE EXTRA (X3)", p: 3.50}
+    ];
+    extDiv.innerHTML = exts.map(e => `
+        <div style="display:flex; justify-content:space-between; align-items:center; color:white; margin-bottom:12px;">
+            <span style="font-size:0.9rem;">${e.n} (+${e.p.toFixed(2)}€)</span>
+            <input type="checkbox" style="width:20px; height:20px; accent-color:var(--pink);" onchange="sumarExtra(this, ${e.p})">
+        </div>
+    `).join('');
+}
+
+window.sumarExtra = (cb, precio) => {
+    if(cb.checked) {
+        currentBurger.total += precio;
+    } else {
+        currentBurger.total -= precio;
+    }
+    document.getElementById('p-total').innerText = currentBurger.total.toFixed(2);
+};
+
+window.cerrarConfigurador = () => {
+    document.getElementById('modal-personalizar').style.display = 'none';
+};
+
+window.confirmarYAnadir = () => {
+    try {
+        // 1. Recogemos lo que el usuario NO quiere
+        let quitados = [];
+        const itemsQuitar = document.querySelectorAll('#lista-ingredientes input:checked');
+        itemsQuitar.forEach(el => {
+            let txt = el.parentElement.innerText.replace('SIN ', '').trim();
+            quitados.push(txt);
+        });
+
+        // 2. Recogemos los EXTRAS
+        let extrasNombres = [];
+        const itemsExtras = document.querySelectorAll('#lista-extras input:checked');
+        itemsExtras.forEach(el => {
+            // Buscamos el texto del span que está al lado del checkbox
+            let txtExtra = el.parentElement.querySelector('span').innerText.split(' (+')[0].trim();
+            extrasNombres.push(txtExtra);
+        });
+
+        // 3. Montamos el nombre detallado
+        let nombreFinal = currentBurger.nombre;
+        let detalles = [];
+        if (quitados.length > 0) detalles.push("Sin: " + quitados.join(', '));
+        if (extrasNombres.length > 0) detalles.push("Extra: " + extrasNombres.join(', '));
+        
+        if (detalles.length > 0) {
+            nombreFinal += " (" + detalles.join(' | ') + ")";
+        }
+
+        console.log("Enviando al carrito:", nombreFinal, "Precio:", currentBurger.total);
+
+        // 4. Llamada a tu función real
+        // IMPORTANTE: Asegúrate de que agregarAlCarrito acepte (nombre, precio)
+        if (typeof window.agregarAlCarrito === 'function') {
+            window.agregarAlCarrito(nombreFinal, currentBurger.total);
+            
+            // 5. Cerramos el modal y limpiamos
+            cerrarConfigurador();
+            
+            // Si tienes función de notificaciones, la lanzamos
+            if(window.mostrarNotificacion) {
+                window.mostrarNotificacion(`¡${currentBurger.nombre} añadida!`);
+            }
+        } else {
+            alert("Error: La función 'agregarAlCarrito' no existe en el JS principal.");
+        }
+
+    } catch (error) {
+        console.error("Error en el configurador:", error);
+    }
+};

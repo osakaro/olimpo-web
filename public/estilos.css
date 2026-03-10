@@ -1551,3 +1551,15 @@ body, .body-entrantes, .body-bebidas, .body-postres {
         position: relative !important;
     }
 }
+
+/* Esto separará visualmente el nombre de la Burger de sus modificaciones */
+.cart-item span:first-child {
+    display: block;
+    line-height: 1.2;
+}
+
+/* Ponemos los paréntesis en otro color y más pequeños */
+/* (Truco: El texto que contiene '(' suele ser la personalización) */
+.cart-item span {
+    font-family: 'Arial', sans-serif; /* Una fuente más limpia para los extras */
+}

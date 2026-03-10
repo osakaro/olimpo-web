@@ -5,7 +5,7 @@
         <head>
             <title>OLIMPO BURGUER | El Sabor de los Dioses</title>
             <link rel="stylesheet" href="estilos.css"/>
-            <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+           <link rel="icon" type="image/svg+xml" href="favicon.svg?v=1" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             <script src="interaccion.js" defer="defer"></script>
         </head>
