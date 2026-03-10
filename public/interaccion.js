@@ -365,21 +365,65 @@ window.abrirHistorial = async function() {
 };
 
 // Controles de visibilidad de modales
+window.abrirRegistro = () => {
+    // 1. CÓDIGO AÑADIDO: Cerramos el menú móvil y el menú de Oscar para que no estorbe
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks) {
+        navLinks.classList.remove('active');
+    }
+    const userMenu = document.getElementById('userMenu');
+    if (userMenu) {
+        userMenu.classList.remove('show');
+    }
+
+    // 2. Tu código original para abrir el modal de registro
+    // (Pon el ID correcto si no es 'modal-registro')
+    const m = document.getElementById('modal-registro');
+    if(m) { 
+        m.style.display='block'; 
+        setTimeout(() => m.classList.add('open'), 10); 
+    }
+};
 window.cerrarHistorial = () => {
     const m = document.getElementById('modal-historial');
     if(m) { m.classList.remove('open'); setTimeout(() => m.style.display='none', 300); }
 };
 window.abrirRegistro = () => {
+    // 1. CÓDIGO AÑADIDO: Cerramos el menú móvil para que no estorbe
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks) {
+        navLinks.classList.remove('active');
+    }
+
+    // 2. Tu código original para abrir el modal de registro
+    // (Pon el ID correcto si no es 'modal-registro')
     const m = document.getElementById('modal-registro');
-    if(m) { m.style.display='block'; setTimeout(() => m.classList.add('open'), 10); }
+    if(m) { 
+        m.style.display='block'; 
+        setTimeout(() => m.classList.add('open'), 10); 
+    }
 };
 window.cerrarRegistro = () => {
     const m = document.getElementById('modal-registro');
     if(m) { m.classList.remove('open'); setTimeout(() => m.style.display='none', 300); }
 };
 window.abrirLogin = () => {
+    // 1. Cerramos el menú móvil y el menú de Oscar para que no estorbe
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks) {
+        navLinks.classList.remove('active');
+    }
+    const userMenu = document.getElementById('userMenu');
+    if (userMenu) {
+        userMenu.classList.remove('show');
+    }
+
+    // 2. Tu código original para abrir el modal
     const m = document.getElementById('modal-login');
-    if(m) { m.style.display='block'; setTimeout(() => m.classList.add('open'), 10); }
+    if(m) { 
+        m.style.display='block'; 
+        setTimeout(() => m.classList.add('open'), 10); 
+    }
 };
 window.cerrarLogin = () => {
     const m = document.getElementById('modal-login');
@@ -467,37 +511,34 @@ window.onload = () => {
    ========================================================================== */
 
 // 1. Función para el Menú Móvil (Hamburguesa)
+// Función para el botón hamburguesa
 window.toggleMobileMenu = function() {
     const navLinks = document.querySelector('.nav-links');
-    const userMenu = document.getElementById('userMenu');
-
     if (navLinks) {
-        // ANTES DE ABRIR, CERRAMOS EL MENÚ DE USUARIO
-        userMenu?.classList.remove('show');
-        
-        // Togleamos el menú móvil
+        // Toggle añade la clase si no está, y la quita si ya está
         navLinks.classList.toggle('active');
     }
 };
 
-// 2. Función para el Dropdown de Usuario
 window.toggleUserMenu = function(event) {
-    if (event) event.stopPropagation(); // ¡ESTO ES CLAVE!
+    // 1. Evitamos que el clic se propague y cierre el menú móvil por error
+    if (event) event.stopPropagation();
+
     const userMenu = document.getElementById('userMenu');
     if (userMenu) {
-        // Cerramos el menú móvil si está abierto para no solapar
-        document.querySelector('.nav-links')?.classList.remove('active');
+        // Alternamos la clase show
         userMenu.classList.toggle('show');
     }
 };
 
-// Limpiador: Si haces clic en cualquier otro sitio, cerramos el menú
-document.addEventListener('click', (e) => {
+// Cerrar el menú si el usuario hace clic en cualquier otro sitio de la pantalla
+document.addEventListener('click', function(event) {
     const userMenu = document.getElementById('userMenu');
-    const userDropdown = document.querySelector('.user-dropdown');
+    const userButton = document.querySelector('.user-dropdown');
     
     if (userMenu && userMenu.classList.contains('show')) {
-        if (userDropdown && !userDropdown.contains(e.target)) {
+        // Si el clic NO es en el botón ni en el menú, lo cerramos
+        if (!userButton.contains(event.target)) {
             userMenu.classList.remove('show');
         }
     }
