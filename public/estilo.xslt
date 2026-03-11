@@ -120,7 +120,7 @@
                     </div>
                     
                     <div class="map-box">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1754.3049912063568!2d-16.32297172135168!3d28.431023095717663!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc41cd37ee2977a7%3A0x18d3a1c0b06be2a8!2sC.%20Chineguas%2C%20185%2C%2038107%20Santa%20Cruz%20de%20Tenerife!5e0!3m2!1ses!2ses!4v1772750135826!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3508.6098266747267!2d-16.32446402483945!3d28.431027793203313!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc41cd37ee2977a7%3A0x18d3a1c0b06be2a8!2sC.%20Chineguas%2C%20185%2C%2038107%20Santa%20Cruz%20de%20Tenerife!5e0!3m2!1ses!2ses!4v1773235591936!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </section>
