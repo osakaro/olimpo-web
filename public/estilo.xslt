@@ -5,7 +5,8 @@
         <head>
             <title>OLIMPO BURGUER | El Sabor de los Dioses</title>
             <link rel="stylesheet" href="estilos.css"/>
-           <link rel="icon" type="image/svg+xml" href="favicon.svg?v=1" />
+            <link rel="icon" type="image/svg+xml" href="favicon.svg?v=1" />
+            <meta charset="UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             <script src="interaccion.js" defer="defer"></script>
         </head>
@@ -89,7 +90,38 @@
                                     <p><xsl:value-of select="descripcion"/></p>
                                     <div class="card-footer-side">
                                         <span class="card-price"><xsl:value-of select="precio"/>€</span>
-                                        <button class="card-btn">PEDIR</button>
+                                        
+                                        <button class="card-btn">
+                                            <xsl:attribute name="onclick">
+                                                <xsl:choose>
+                                                    <xsl:when test="name()='hamburguesa' or name()='plato'">
+                                                        <xsl:text>abrirConfigurador('</xsl:text>
+                                                        <xsl:value-of select="nombre"/>
+                                                        <xsl:text>', '</xsl:text>
+                                                        <xsl:value-of select="precio"/>
+                                                        <xsl:text>', '</xsl:text>
+                                                        <xsl:for-each select="ingredientes/item[@modificable='si']">
+                                                            <xsl:value-of select="."/>
+                                                            <xsl:if test="position() != last()">, </xsl:if>
+                                                        </xsl:for-each>
+                                                        <xsl:text>', '</xsl:text>
+                                                        <xsl:for-each select="extras/suplemento">
+                                                            <xsl:value-of select="."/>:<xsl:value-of select="@precio"/>
+                                                            <xsl:if test="position() != last()">, </xsl:if>
+                                                        </xsl:for-each>
+                                                        <xsl:text>')</xsl:text>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <xsl:text>agregarAlCarrito('</xsl:text>
+                                                        <xsl:value-of select="nombre"/>
+                                                        <xsl:text>', '</xsl:text>
+                                                        <xsl:value-of select="precio"/>
+                                                        <xsl:text>')</xsl:text>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+                                            </xsl:attribute>
+                                            PEDIR
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -99,6 +131,25 @@
                     <button class="arrow" id="btnNext">▶</button>
                 </div>
             </main>
+
+            <div id="modal-personalizar" class="modal-neon" style="display:none; position: fixed; z-index: 100010; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); align-items: center; justify-content: center;">
+                <div class="modal-content" style="background: #000; border: 2px solid var(--cyan); padding: 25px; width: 90%; max-width: 400px; border-radius: 15px; box-shadow: 0 0 20px var(--cyan);">
+                    <h2 id="p-nombre" class="t-rosa" style="text-align: center; margin-bottom: 20px;">NOMBRE</h2>
+                    <div class="seccion-mod">
+                        <h3 style="color: var(--cyan); font-size: 0.9rem; border-bottom: 1px solid #333; padding-bottom: 5px;">¿QUITAR ALGO? (Gratis)</h3>
+                        <div id="lista-ingredientes" style="margin: 15px 0;"></div>
+                    </div>
+                    <div class="seccion-mod">
+                        <h3 style="color: var(--pink); font-size: 0.9rem; border-bottom: 1px solid #333; padding-bottom: 5px;">AÑADIR GLORIA (Extra)</h3>
+                        <div id="lista-extras" style="margin: 15px 0;"></div>
+                    </div>
+                    <div style="border-top: 2px solid #333; padding-top: 15px; text-align: center;">
+                        <h3 style="color: white;">TOTAL: <span id="p-total" class="t-azul">0.00</span>€</h3>
+                        <button onclick="confirmarYAnadir()" class="checkout-btn" style="width: 100%; margin-top: 10px;">AÑADIR AL BANQUETE</button>
+                        <button onclick="cerrarConfigurador()" style="background: none; border: none; color: #666; margin-top: 25px; cursor: pointer; display: block; width: 100%;">CANCELAR</button>
+                    </div>
+                </div>
+            </div>
 
             <section class="location-section">
                 <div class="divine-graffiti-container"></div>
@@ -130,15 +181,11 @@
                     <h2>TU PEDIDO</h2>
                     <button onclick="toggleCart()" class="close-cart">X</button>
                 </div>
-                
                 <div id="cart-items"></div>
-
                 <div class="cart-footer-panel">
                     <div class="total-row">
                         <span>TOTAL:</span>
-                        <div>
-                            <span id="cart-total">0.00</span>€
-                        </div>
+                        <div><span id="cart-total">0.00</span>€</div>
                     </div>
                     <button class="checkout-btn" onclick="iniciarPago()">PAGAR AHORA</button>
                     <button class="clear-btn" onclick="vaciarCarrito()">VACIAR</button>
@@ -146,7 +193,6 @@
             </div>
 
             <div id="notification-container" class="notification"></div>
-            
             <audio id="sonido-clic" src="sonido clic.mp3" preload="auto"></audio>
             <div id="contenedor-registro"></div>
             <div id="contenedor-login"></div>
@@ -154,33 +200,21 @@
             <div id="modal-historial" class="modal-neon">
                 <div class="modal-content">
                     <span class="close-modal" onclick="cerrarHistorial()">×</span>
-                    
-                    <div class="puntos-fidelidad-box" style="margin-bottom: 30px; border: 1px solid var(--cyan); padding: 20px; border-radius: 15px; background: rgba(0,242,255,0.05);">
-                        <h3 style="color: #fff; font-size: 0.9rem; margin-bottom: 10px; font-family: 'Arial Black';">NIVEL DE GLORIA ACUMULADA</h3>
-                        
+                    <div class="puntos-fidelidad-box">
+                        <h3 style="color: #fff; font-size: 0.9rem; margin-bottom: 10px;">NIVEL DE GLORIA ACUMULADA</h3>
                         <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
-                            <span id="puntos-display" class="puntos-numero-god">6</span>
-                            
+                            <span id="puntos-display" class="puntos-numero-god">0</span>
                             <div style="text-align: left;">
                                 <p style="margin: 0; color: #fff; font-size: 0.8rem;">PUNTOS</p>
                                 <p id="descuento-status" style="margin: 0; color: var(--cyan); font-size: 0.7rem;">Gasta 10€ para ganar 1 punto</p>
                             </div>
                         </div>
-                        
                         <div style="width: 100%; height: 8px; background: #111; border-radius: 10px; margin-top: 15px; border: 1px solid #333; overflow: hidden;">
-                            <div id="puntos-progreso-bar" style="width: 0%; height: 100%; background: linear-gradient(to right, var(--cyan), var(--pink)); box-shadow: 0 0 10px var(--cyan); transition: 1s ease-in-out;"></div>
-                        </div>
-                        
-                        <div class="zona-canjeo" style="margin-top: 15px;">
-                            <p id="proximo-premio-txt" style="font-size: 0.7rem; color: #888; margin-bottom: 10px;">¡Cada 5 puntos consigues 5€ de descuento!</p>
-                            
-                            <button id="btn-canjear-desc" class="canjear-btn-neon" style="display: none;" onclick="window.canjearPremio()">RECLAMAR MI RECOMPENSA DE 5€</button>
+                            <div id="puntos-progreso-bar" style="width: 0%; height: 100%; background: linear-gradient(to right, var(--cyan), var(--pink)); transition: 1s ease-in-out;"></div>
                         </div>
                     </div>
-
-                    <h2 style="color: var(--cyan); text-shadow: 0 0 10px var(--cyan); margin-bottom: 20px; font-size: 1.5rem;">HISTORIAL DE BANQUETES</h2>
-                    <div id="lista-pedidos" style="max-height: 300px; overflow-y: auto;">
-                        </div>
+                    <h2 style="color: var(--cyan); margin-bottom: 20px; font-size: 1.5rem;">HISTORIAL DE BANQUETES</h2>
+                    <div id="lista-pedidos" style="max-height: 300px; overflow-y: auto;"></div>
                 </div>
             </div>
 

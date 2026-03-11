@@ -6,6 +6,7 @@
             <title>LAS BURGERS | Olimpo Burguer</title>
             <link rel="stylesheet" href="estilos.css"/>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <meta charset="UTF-8"/>
         </head>
         <body class="body-bebidas">
             <nav class="navbar">
@@ -76,10 +77,31 @@
                         <div class="bebida-info">
                             <span class="card-cat"><xsl:value-of select="@categoria"/></span>
                             <h3><xsl:value-of select="nombre"/></h3>
-                            <p class="bebida-desc"><xsl:value-of select="description"/></p>
+                            <p class="bebida-desc"><xsl:value-of select="descripcion"/></p>
                             <div class="bebida-footer">
                                 <span class="card-price"><xsl:value-of select="precio"/>€</span>
-                                <button class="card-btn" onclick="abrirConfigurador('{nombre}', '{precio}')">PEDIR</button>
+                                
+                                <button class="card-btn">
+                                    <xsl:attribute name="onclick">
+                                        <xsl:text>abrirConfigurador('</xsl:text>
+                                        <xsl:value-of select="nombre"/>
+                                        <xsl:text>', '</xsl:text>
+                                        <xsl:value-of select="precio"/>
+                                        <xsl:text>', '</xsl:text>
+                                        <xsl:for-each select="ingredientes/item[@modificable='si']">
+                                            <xsl:value-of select="."/>
+                                            <xsl:if test="position() != last()">, </xsl:if>
+                                        </xsl:for-each>
+                                        <xsl:text>', '</xsl:text>
+                                        <xsl:for-each select="extras/suplemento">
+                                            <xsl:value-of select="."/>:<xsl:value-of select="@precio"/>
+                                            <xsl:if test="position() != last()">, </xsl:if>
+                                        </xsl:for-each>
+                                        <xsl:text>')</xsl:text>
+                                    </xsl:attribute>
+                                    PEDIR
+                                </button>
+                                
                             </div>
                         </div>
                     </div>
@@ -103,7 +125,7 @@
                     <div style="border-top: 2px solid #333; padding-top: 15px; text-align: center;">
                         <h3 style="color: white;">TOTAL: <span id="p-total" class="t-azul">0.00</span>€</h3>
                         <button onclick="confirmarYAnadir()" class="checkout-btn" style="width: 100%; margin-top: 10px;">AÑADIR AL BANQUETE</button>
-                        <button onclick="cerrarConfigurador()" style="background: none; border: none; color: #666; margin-top: 10px; cursor: pointer;">CANCELAR</button>
+                        <button onclick="cerrarConfigurador()" style="background: none; border: none; color: #666; margin-top: 25px; cursor: pointer; display: block; width: 100%;">CANCELAR</button>
                     </div>
                 </div>
             </div>

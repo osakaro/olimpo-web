@@ -6,6 +6,7 @@
             <title>OFRENDAS | Olimpo Burguer</title>
             <link rel="stylesheet" href="estilos.css"/>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <meta charset="UTF-8"/>
         </head>
         <body class="body-entrantes">
             <nav class="navbar">
@@ -79,12 +80,45 @@
                             <p class="bebida-desc"><xsl:value-of select="descripcion"/></p>
                             <div class="bebida-footer">
                                 <span class="card-price"><xsl:value-of select="precio"/>€</span>
-                                <button class="card-btn">PEDIR</button>
+                                
+                                <button class="card-btn">
+                                    <xsl:attribute name="onclick">
+                                        <xsl:text>abrirConfigurador('</xsl:text>
+                                        <xsl:value-of select="nombre"/>
+                                        <xsl:text>', '</xsl:text>
+                                        <xsl:value-of select="precio"/>
+                                        <xsl:text>', '</xsl:text>
+                                        <xsl:for-each select="ingredientes/item[@modificable='si']">
+                                            <xsl:value-of select="."/>
+                                            <xsl:if test="position() != last()">, </xsl:if>
+                                        </xsl:for-each>
+                                        <xsl:text>', '')</xsl:text> </xsl:attribute>
+                                    PEDIR
+                                </button>
                             </div>
                         </div>
                     </div>
                 </xsl:for-each>
             </main>
+
+            <div id="modal-personalizar" class="modal-neon" style="display:none; position: fixed; z-index: 100010; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); align-items: center; justify-content: center;">
+                <div class="modal-content" style="background: #000; border: 2px solid var(--cyan); padding: 25px; width: 90%; max-width: 400px; border-radius: 15px; box-shadow: 0 0 20px var(--cyan);">
+                    <h2 id="p-nombre" class="t-rosa" style="text-align: center; margin-bottom: 20px;">NOMBRE</h2>
+                    <div class="seccion-mod">
+                        <h3 style="color: var(--cyan); font-size: 0.9rem; border-bottom: 1px solid #333; padding-bottom: 5px;">¿QUITAR ALGO? (Gratis)</h3>
+                        <div id="lista-ingredientes" style="margin: 15px 0;"></div>
+                    </div>
+                    <div class="seccion-mod">
+                        <h3 style="color: var(--pink); font-size: 0.9rem; border-bottom: 1px solid #333; padding-bottom: 5px;">AÑADIR GLORIA (Extra)</h3>
+                        <div id="lista-extras" style="margin: 15px 0;"></div>
+                    </div>
+                    <div style="border-top: 2px solid #333; padding-top: 15px; text-align: center;">
+                        <h3 style="color: white;">TOTAL: <span id="p-total" class="t-azul">0.00</span>€</h3>
+                        <button onclick="confirmarYAnadir()" class="checkout-btn" style="width: 100%; margin-top: 10px;">AÑADIR AL BANQUETE</button>
+                        <button onclick="cerrarConfigurador()" style="background: none; border: none; color: #666; margin-top: 25px; cursor: pointer; display: block; width: 100%;">CANCELAR</button>
+                    </div>
+                </div>
+            </div>
 
             <div id="cart-panel">
                 <div class="cart-header">
@@ -111,7 +145,6 @@
 
             <script src="interaccion.js"></script>
             <script>
-                // Usamos window.onload: se ejecuta UNA SOLA VEZ cuando todo el XSLT está dibujado
                 window.onload = function() {
                     console.log("🏛️ Sección cargada, activando lógica...");
                     if(window.inicializarSeccionOlimpo) {
@@ -119,8 +152,6 @@
                     }
                 };
             </script>
-
-
 
             <footer class="footer-bottom">
                 <p>© 2026 OLIMPO BURGUER - Diseñado por Oscar Casanova 1ºDAW</p>
