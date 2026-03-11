@@ -8,6 +8,18 @@
         <descripcion>Te petrificará. Pan negro de carbón con "tentáculos" de calamar...</descripcion>
         <frecuencia>Baja</frecuencia>
         <imagen>img/burger1.png</imagen>
+    <ingredientes>
+        <item modificable="si">Cebolla Roja</item>
+        <item modificable="si">Alioli</item>
+        <item modificable="si">Tomate</item>
+        <item modificable="si">Canónigos</item>
+    </ingredientes>
+    <extras>
+        <suplemento precio="1.50">Extra Queso</suplemento>
+        <suplemento precio="1.80">Bacon Crujiente</suplemento>
+        <suplemento precio="1.20">Huevo Frito</suplemento>
+        <suplemento precio="3.50">Carne Extra</suplemento>
+    </extras>
     </hamburguesa>
 
     <hamburguesa categoria="DIOSES">
@@ -42,6 +54,11 @@
         <descripcion>Nachos crujientes bañados en tres quesos fundidos, jalapeños y pico de gallo.</descripcion>
         <precio>8.50</precio>
         <imagen>img/entrante1.png</imagen>
+    <ingredientes>
+        <item modificable="si">Jalapeños</item>
+        <item modificable="si">Salsa Queso</item>
+        <item modificable="si">Pico de Gallo</item>
+    </ingredientes>
     </plato>
 
     <hamburguesa categoria="TITANES" sugerencia="si">
@@ -51,6 +68,17 @@
         <descripcion>Doble carne de Angus, aros de cebolla colosales y salsa barbacoa secreta de los tiempos.</descripcion>
         <frecuencia>Alta</frecuencia>
         <imagen>img/burger5.png</imagen>
+    <ingredientes>
+        <item modificable="si">Aros de Cebolla</item>
+        <item modificable="si">Queso</item>
+        <item modificable="si">Cebolla</item>
+    </ingredientes>
+    <extras>
+        <suplemento precio="1.50">Extra Queso</suplemento>
+        <suplemento precio="1.80">Bacon Crujiente</suplemento>
+        <suplemento precio="1.20">Huevo Frito</suplemento>
+        <suplemento precio="3.50">Carne Extra</suplemento>
+    </extras>
     </hamburguesa>
 
     <bebida categoria="CÓCTELES NEÓN" sugerencia="si">

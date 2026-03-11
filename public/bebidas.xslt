@@ -80,7 +80,18 @@
                             <p class="bebida-desc"><xsl:value-of select="descripcion"/></p>
                             <div class="bebida-footer">
                                 <span class="card-price"><xsl:value-of select="precio"/>€</span>
-                                <button class="card-btn">PEDIR</button>
+                                
+                                <button class="card-btn">
+                                    <xsl:attribute name="onclick">
+                                        <xsl:text>agregarAlCarrito('</xsl:text>
+                                        <xsl:value-of select="nombre"/>
+                                        <xsl:text>', '</xsl:text>
+                                        <xsl:value-of select="precio"/>
+                                        <xsl:text>')</xsl:text>
+                                    </xsl:attribute>
+                                    PEDIR
+                                </button>
+                                
                             </div>
                         </div>
                     </div>
@@ -113,14 +124,13 @@
             <script src="interaccion.js"></script>
 
             <script>
-                // Usamos window.onload: se ejecuta UNA SOLA VEZ cuando todo el XSLT está dibujado
                 window.onload = function() {
                     console.log("🏛️ Sección cargada, activando lógica...");
                     if(window.inicializarSeccionOlimpo) {
                         window.inicializarSeccionOlimpo();
                     }
                 };
-            </script>   
+            </script> 
 
             <footer class="footer-bottom">
                 <p>© 2026 OLIMPO BURGUER - Diseñado por Oscar Casanova 1ºDAW</p>

@@ -6,6 +6,11 @@
         <descripcion>Nachos crujientes bañados en tres quesos fundidos, jalapeños y pico de gallo.</descripcion>
         <precio>8.50</precio>
         <imagen>img/entrante1.png</imagen>
+    <ingredientes>
+        <item modificable="si">Jalapeños</item>
+        <item modificable="si">Salsa Queso</item>
+        <item modificable="si">Pico de Gallo</item>
+    </ingredientes>
     </plato>
 
     <plato categoria="PARA PICAR">

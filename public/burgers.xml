@@ -91,7 +91,7 @@
         <imagen>img/burger5.png</imagen>
         <ingredientes>
         <item modificable="si">Aros de Cebolla</item>
-        <item modificable="si">Quesa</item>
+        <item modificable="si">Queso</item>
         <item modificable="si">Cebolla</item>
     </ingredientes>
     <extras>
