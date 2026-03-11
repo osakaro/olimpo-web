@@ -220,6 +220,10 @@
 
             <footer class="footer-bottom">
                 <p>© 2026 OLIMPO BURGUER - Diseñado por Oscar Casanova 1ºDAW</p>
+                <p style="font-size: 0.7rem; color: #666;">
+                    Imágenes cortesía de <a href="https://www.pexels.com" style="color: var(--cyan); text-decoration: none;">Pexels</a> y 
+                    <a href="https://www.unsplash.com" style="color: var(--pink); text-decoration: none;">Unsplash</a>.
+                </p>
             </footer>
         </body>
     </html>
