@@ -1310,7 +1310,23 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     box-shadow: 0 0 10px var(--pink);
 }
 
-/* Esto va al final de estilos.css */
+/* Forzamos que el botón se vea sí o sí */
+#btn-activar-bendicion {
+    background: var(--pink) !important;
+    color: white !important;
+    display: block; /* Aseguramos que no herede un 'none' */
+    margin: 15px 0;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Arial Black', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 0 15px var(--pink);
+    text-transform: uppercase;
+    width: 100%;
+}
+
+
 
 
 /* =============================================================

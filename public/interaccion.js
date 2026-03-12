@@ -77,10 +77,14 @@ window.actualizarInterfaz = function() {
     });
 
     // Lógica de costes y beneficios
+    // --- LÓGICA DE COSTES Y BENDICIÓN (CÓDIGO DEFINITIVO) ---
     const costoEnvio = 4.99;
     const gratisAPartirDe = 50;
     const esGratis = subtotalGeneral >= gratisAPartirDe;
-    const tienePremioDisponible = localStorage.getItem('descuento_olimpo') === '10';
+
+    // 1. ¿El usuario ha reclamado el premio en "Mis Banquetes"?
+    const premioReclamado = localStorage.getItem('descuento_olimpo') === '10';
+    // 2. ¿Ya le ha dado al botón rosa de "Aplicar" dentro del carrito?
     const descuentoYaActivado = localStorage.getItem('descuento_activado_en_carrito') === 'si';
 
     let totalFinal = (esGratis || subtotalGeneral === 0) ? subtotalGeneral : subtotalGeneral + costoEnvio;
@@ -96,6 +100,7 @@ window.actualizarInterfaz = function() {
                 </div>`;
 
         if (descuentoYaActivado) {
+            // Caso A: El descuento ya restó los 5€
             totalFinal = Math.max(0, totalFinal - 5);
             htmlExtra += `
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding: 10px; background: rgba(255, 0, 217, 0.1); border: 1px solid var(--pink); border-radius: 10px;">
@@ -103,18 +108,22 @@ window.actualizarInterfaz = function() {
                         <span style="color: var(--pink); text-shadow: 0 0 8px var(--pink);">⚡</span>
                         <span style="font-family: 'Arial Black'; font-size: 0.8rem; color: var(--pink);">BENDICIÓN: -5.00€</span>
                     </div>
-                    <button onclick="window.desactivarDescuento()" style="background: #fff; border: none; color: #000; font-family: 'Arial Black'; font-size: 0.6rem; padding: 5px 10px; border-radius: 5px; cursor: pointer; text-transform: uppercase;">QUITAR</button>
+                    <button onclick="window.desactivarDescuento()" style="background: #fff; border: none; color: #000; font-family: 'Arial Black'; font-size: 0.6rem; padding: 5px 10px; border-radius: 5px; cursor: pointer;">QUITAR</button>
                 </div>`;
-        } else if (tienePremioDisponible) {
+        } 
+        else if (premioReclamado) {
+            // Caso B: Pulsó el botón en el historial pero aún no lo ha aplicado en el carrito
             htmlExtra += `
-                <button onclick="window.activarDescuentoEnCarrito()" style="width:100%; background:transparent; border:1px solid var(--pink); color:var(--pink); padding:10px; cursor:pointer; font-family:'Arial Black'; font-size: 0.75rem; margin-top:10px; box-shadow: 0 0 10px var(--pink); text-transform: uppercase;">
+                <button id="btn-activar-bendicion" 
+                        onclick="window.activarDescuentoEnCarrito()" 
+                        style="background: #ff00d9 !important; color: white !important; display: block !important; width: 100%; padding: 12px; margin-top: 10px; font-family: 'Arial Black'; border: none; border-radius: 8px; box-shadow: 0 0 15px #ff00d9; cursor: pointer; text-transform: uppercase;">
                     APLICAR BENDICIÓN DE 5€
                 </button>`;
         }
         
         htmlExtra += `
-                <div class="promo-info-neon" style="text-align: center; color: var(--cyan); font-family: 'Segoe Script', cursive; font-size: 1.2rem; text-shadow: 0 0 10px var(--cyan); line-height: 1.3; margin-top: 10px;">
-                    ${esGratis ? "¡Envío GRATIS por los Dioses!" : `* Envío GRATIS a partir de 50€<br>(Te faltan ${(gratisAPartirDe - subtotalGeneral).toFixed(2)}€)`}
+                <div class="promo-info-neon" style="text-align: center; color: var(--cyan); font-family: 'Segoe Script', cursive; font-size: 1.2rem; margin-top: 10px;">
+                    ${esGratis ? "¡Envío GRATIS por los Dioses!" : `* Envío GRATIS a partir de 50€`}
                 </div>
             </div>`;
         lista.innerHTML += htmlExtra;
@@ -233,23 +242,27 @@ window.cerrarSesion = () => { localStorage.clear(); location.reload(); };
    ========================================================================== */
 function actualizarPuntosFidelidad(puntosReales) {
     const puntos = puntosReales || 0;
-    const progreso = (puntos % 10) * 10; 
+    localStorage.setItem('mortal_puntos', puntos);
+    
     const display = document.getElementById('puntos-display');
     const bar = document.getElementById('puntos-progreso-bar');
     const txt = document.getElementById('proximo-premio-txt');
     const btn = document.getElementById('btn-canjear-desc');
 
+    // Consola para debug (borrar luego)
+    console.log("Actualizando puntos:", puntos, "¿Botón encontrado?:", !!btn);
+
     if(display) display.innerText = puntos;
-    if(bar) bar.style.width = progreso + "%";
+    if(bar) bar.style.width = ((puntos % 10) * 10) + "%";
     
-    if(txt) {
+    if(btn) {
         if(puntos >= 10) {
-            txt.innerHTML = `<span style="color: var(--pink); font-weight: bold;">¡BENDICIÓN DE 5€ LISTA!</span>`;
-            if(btn) btn.style.display = 'block'; 
+            btn.style.display = 'block'; // Lo mostramos
+            if(txt) txt.innerHTML = `<span style="color: var(--pink); font-weight: bold;">¡BENDICIÓN DE 5€ LISTA!</span>`;
         } else {
+            btn.style.display = 'none'; // Lo ocultamos
             const faltan = 10 - (puntos % 10);
-            txt.innerHTML = `¡Te faltan ${faltan} puntos para tu próximo descuento!`;
-            if(btn) btn.style.display = 'none';
+            if(txt) txt.innerHTML = `¡Te faltan ${faltan} puntos para tu próximo descuento!`;
         }
     }
 }
@@ -335,7 +348,7 @@ window.abrirHistorial = async function() {
                     </div>
                     <div class="zona-canjeo" style="margin-top: 15px;">
                         <p id="proximo-premio-txt" style="font-size: 0.7rem; color: #888; margin-bottom: 10px;">¡Cada 10 puntos consigues 5€ de descuento!</p>
-                        <button id="btn-canjear-desc" class="canjear-btn-neon" style="display: none;" onclick="window.canjearPremio()">RECLAMAR MI RECOMPENSA DE 5€</button>
+                        <button id="btn-canjear-desc" class="canjear-btn-neon" onclick="window.canjearPremio()">RECLAMAR MI RECOMPENSA DE 5€</button>
                     </div>
                 </div>
                 <h2 style="color: var(--cyan); text-shadow: 0 0 10px var(--cyan); margin-bottom: 20px; font-size: 1.5rem;">HISTORIAL DE BANQUETES</h2>
@@ -346,22 +359,68 @@ window.abrirHistorial = async function() {
     const contenedor = document.getElementById('lista-pedidos');
     try {
         const res = await fetch(`${API_URL}/historial/${email}`);
-        const data = await res.json(); 
-        actualizarPuntosFidelidad(data.puntos || 0);
-        contenedor.innerHTML = data.pedidos.length ? "" : "<p style='color:white; text-align:center;'>SIN OFRENDAS TODAVÍA.</p>";
+        const data = await res.json();
+        const puntos = data.puntos || 0;
+        localStorage.setItem('mortal_puntos', puntos);
+
+        // Calculamos aquí si debe verse el botón
+        const mostrarBoton = puntos >= 10 ? 'block' : 'none';
+        const textoPremio = puntos >= 10 
+            ? '<span style="color: var(--pink); font-weight: bold;">¡BENDICIÓN DE 5€ LISTA!</span>' 
+            : `¡Te faltan ${10 - (puntos % 10)} puntos para tu próximo descuento!`;
+
+        // Inyectamos TODO el modal de una vez con los datos reales
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal" onclick="cerrarHistorial()">×</span>
+                <div class="puntos-fidelidad-box" style="margin-bottom: 30px; border: 1px solid var(--cyan); padding: 20px; border-radius: 15px; background: rgba(0,242,255,0.05);">
+                    <h3 style="color: #fff; font-size: 0.9rem; margin-bottom: 10px; font-family: 'Arial Black';">NIVEL DE GLORIA ACUMULADA</h3>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+                        <span class="puntos-numero-god">${puntos}</span>
+                        <div style="text-align: left;">
+                            <p style="margin: 0; color: #fff; font-size: 0.8rem;">PUNTOS</p>
+                            <p style="margin: 0; color: var(--cyan); font-size: 0.7rem;">Gasta 10€ para ganar 1 punto</p>
+                        </div>
+                    </div>
+                    <div style="width: 100%; height: 8px; background: #111; border-radius: 10px; margin-top: 15px; border: 1px solid #333; overflow: hidden;">
+                        <div style="width: ${(puntos % 10) * 10}%; height: 100%; background: linear-gradient(to right, var(--cyan), var(--pink)); box-shadow: 0 0 10px var(--cyan);"></div>
+                    </div>
+                    <div class="zona-canjeo" style="margin-top: 15px; text-align: center;">
+                        <p style="font-size: 0.75rem; color: #888; margin-bottom: 10px;">${textoPremio}</p>
+                        <button id="btn-canjear-desc" class="canjear-btn-neon" 
+                                style="display: ${mostrarBoton}; width: 100%;" 
+                                onclick="window.canjearPremio()">
+                            RECLAMAR MI RECOMPENSA DE 5€
+                        </button>
+                    </div>
+                </div>
+                <h2 style="color: var(--cyan); text-shadow: 0 0 10px var(--cyan); margin-bottom: 20px; font-size: 1.5rem;">HISTORIAL DE BANQUETES</h2>
+                <div id="lista-pedidos" style="max-height: 300px; overflow-y: auto;">
+                    ${data.pedidos.length ? '' : "<p style='color:white; text-align:center;'>SIN OFRENDAS TODAVÍA.</p>"}
+                </div>
+            </div>`;
+
+        // Renderizamos los pedidos en el contenedor que acabamos de crear
+        const contenedor = document.getElementById('lista-pedidos');
         data.pedidos.forEach(p => {
             contenedor.innerHTML += `
                 <div class="pedido-card" style="border: 1px solid #222; padding: 15px; margin-bottom: 10px; border-radius: 10px;">
-                    <div class="pedido-header" style="display:flex; justify-content:space-between; color: var(--cyan); font-weight:bold; margin-bottom:5px;">
+                    <div style="display:flex; justify-content:space-between; color: var(--cyan); font-weight:bold; margin-bottom:5px;">
                         <span>📅 ${p.fecha_formateada}</span>
                         <span>${p.total}€</span>
                     </div>
                     <div style="color: #ccc; font-size:0.85rem;">⚡ ${p.productos}</div>
                 </div>`;
         });
+
         modal.style.display = 'flex';
         setTimeout(() => modal.classList.add('open'), 10);
-    } catch (e) { mostrarMensajeDivino("ERROR AL CARGAR HISTORIAL", "rosa"); }
+        window.actualizarInterfaz();
+
+    } catch (e) { 
+        console.error(e);
+        mostrarMensajeDivino("ERROR AL CARGAR", "rosa"); 
+    }
 };
 
 // Controles de visibilidad de modales
@@ -377,7 +436,6 @@ window.abrirRegistro = () => {
     }
 
     // 2. Tu código original para abrir el modal de registro
-    // (Pon el ID correcto si no es 'modal-registro')
     const m = document.getElementById('modal-registro');
     if(m) { 
         m.style.display='block'; 
@@ -395,8 +453,7 @@ window.abrirRegistro = () => {
         navLinks.classList.remove('active');
     }
 
-    // 2. Tu código original para abrir el modal de registro
-    // (Pon el ID correcto si no es 'modal-registro')
+    // 2.código original para abrir el modal de registro
     const m = document.getElementById('modal-registro');
     if(m) { 
         m.style.display='block'; 
@@ -408,7 +465,7 @@ window.cerrarRegistro = () => {
     if(m) { m.classList.remove('open'); setTimeout(() => m.style.display='none', 300); }
 };
 window.abrirLogin = () => {
-    // 1. Cerramos el menú móvil y el menú de Oscar para que no estorbe
+    // 1. Cerramos el menú móvil y el menú
     const navLinks = document.querySelector('.nav-links');
     if (navLinks) {
         navLinks.classList.remove('active');
@@ -418,7 +475,6 @@ window.abrirLogin = () => {
         userMenu.classList.remove('show');
     }
 
-    // 2. Tu código original para abrir el modal
     const m = document.getElementById('modal-login');
     if(m) { 
         m.style.display='block'; 
