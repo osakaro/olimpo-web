@@ -1,19 +1,20 @@
+require('dotenv').config(); // 1. CARGA LAS VARIABLES AL PRINCIPIO
 const express = require('express');
 const mysql = require('mysql2/promise');
 const cors = require('cors');
-const path = require('path'); // Movido arriba por orden
+const path = require('path');
 
 const app = express();
 app.use(cors()); 
 app.use(express.json()); 
 
-// Configuración de la base de datos (TIDB Cloud)
+// 2. CONFIGURACIÓN USANDO LAS VARIABLES DEL .ENV
 const dbConfig = {
-    host: 'gateway01.eu-central-1.prod.aws.tidbcloud.com',
-    user: '5rTWHdrTkzJQtt1.root',
-    password: '8CveIRqStOFIzR9l',
-    database: 'test',
-    port: 4000,
+    host: process.env.TIDB_CLOUD_HOST,
+    user: process.env.TIDB_CLOUD_USER,
+    password: process.env.TIDB_CLOUD_PASSWORD,
+    database: process.env.TIDB_CLOUD_DATABASE,
+    port: process.env.TIDB_CLOUD_PORT,
     ssl: {
         minVersion: 'TLSv1.2',
         rejectUnauthorized: true
