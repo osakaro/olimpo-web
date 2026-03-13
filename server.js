@@ -25,8 +25,50 @@ const dbConfig = {
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 2. Esto envía el archivo XML que está dentro de public al entrar a la web
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'hamburgueseria.xml')); 
+const fs = require('fs').promises;
+
+app.get('/', async (req, res) => {
+    let connection;
+    try {
+        // 1. Leemos tu XML original de la carpeta public
+        let xmlBase = await fs.readFile(path.join(__dirname, 'public', 'hamburgueseria.xml'), 'utf8');
+        
+        // 2. Miramos si en la URL viene el email (ej: /?email=oscar@mail.com)
+        const userEmail = req.query.email;
+
+        if (userEmail) {
+            connection = await mysql.createConnection(dbConfig);
+            // Consultamos TiDB Cloud para ver si este mortal tiene premios
+            const [rows] = await connection.execute(
+                "SELECT ya_jugo, premio_id, DATE_FORMAT(caducidad_premio, '%d/%m/%Y') as fecha FROM usuarios WHERE email = ?", 
+                [userEmail]
+            );
+
+            // 3. Si tiene un premio ganado ('si'), lo inyectamos en el XML
+            if (rows.length > 0 && rows[0].ya_jugo === 'si') {
+                const bloquePremio = `
+    <juego_ruleta activo="si">
+        <ya_jugo>si</ya_jugo>
+        <premio_destino>${rows[0].premio_id}</premio_destino>
+        <caducidad>${rows[0].fecha}</caducidad>
+    </juego_ruleta>`;
+                
+                // Metemos el bloque justo antes de cerrar la carta
+                xmlBase = xmlBase.replace('</hamburgueseria>', `${bloquePremio}\n</hamburgueseria>`);
+            }
+        }
+
+        // 4. Enviamos el XML "tuneado" con los datos de la DB
+        res.header('Content-Type', 'application/xml');
+        res.send(xmlBase);
+
+    } catch (error) {
+        console.error("Error en la forja del XML:", error);
+        // Si falla la DB, mandamos el XML limpio para que al menos vean la carta
+        res.sendFile(path.join(__dirname, 'public', 'hamburgueseria.xml'));
+    } finally {
+        if (connection) await connection.end();
+    }
 });
 
 // --- RUTAS DE API ---
@@ -102,4 +144,29 @@ app.post('/registro', async (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor del Olimpo en el puerto ${PORT}`);
+});
+
+
+//RULETA DE LA FORTUNA
+// --- RULETA DE LA FORTUNA ---
+app.post('/guardar-premio', async (req, res) => {
+    const { email, id_premio } = req.body;
+    let connection;
+    
+    const fechaCaducidad = new Date();
+    fechaCaducidad.setDate(fechaCaducidad.getDate() + 7);
+    const caducidadFormateada = fechaCaducidad.toISOString().split('T')[0];
+
+    try {
+        connection = await mysql.createConnection(dbConfig);
+        await connection.execute(
+            "UPDATE usuarios SET ya_jugo = 'si', premio_id = ?, caducidad_premio = ? WHERE email = ?", 
+            [id_premio, caducidadFormateada, email]
+        );
+        res.status(200).json({ mensaje: "BENDICIÓN GUARDADA EN EL OLIMPO" });
+    } catch (error) {
+        res.status(500).json({ mensaje: "ERROR AL GUARDAR PREMIO: " + error.message });
+    } finally {
+        if (connection) await connection.end();
+    }
 });

@@ -197,11 +197,12 @@
             <div id="contenedor-registro"></div>
             <div id="contenedor-login"></div>
 
-            <div id="modal-historial" class="modal-neon">
+           <div id="modal-historial" class="modal-neon" style="display:none;">
                 <div class="modal-content">
                     <span class="close-modal" onclick="cerrarHistorial()">×</span>
-                    <div class="puntos-fidelidad-box">
-                        <h3 style="color: #fff; font-size: 0.9rem; margin-bottom: 10px;">NIVEL DE GLORIA ACUMULADA</h3>
+                    
+                    <div class="puntos-fidelidad-box" style="margin-bottom: 30px; border: 1px solid var(--cyan); padding: 20px; border-radius: 15px; background: rgba(0,242,255,0.05);">
+                        <h3 style="color: #fff; font-size: 0.9rem; margin-bottom: 10px; font-family: 'Arial Black';">NIVEL DE GLORIA ACUMULADA</h3>
                         <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
                             <span id="puntos-display" class="puntos-numero-god">0</span>
                             <div style="text-align: left;">
@@ -212,11 +213,104 @@
                         <div style="width: 100%; height: 8px; background: #111; border-radius: 10px; margin-top: 15px; border: 1px solid #333; overflow: hidden;">
                             <div id="puntos-progreso-bar" style="width: 0%; height: 100%; background: linear-gradient(to right, var(--cyan), var(--pink)); transition: 1s ease-in-out;"></div>
                         </div>
+                        <div class="zona-canjeo" style="margin-top: 15px; text-align: center;">
+                            <button id="btn-canjear-desc" class="canjear-btn-neon" style="display: none; width: 100%;" onclick="window.canjearPremio()">
+                                RECLAMAR RECOMPENSA DE 5€
+                            </button>
+                        </div>
                     </div>
-                    <h2 style="color: var(--cyan); margin-bottom: 20px; font-size: 1.5rem;">HISTORIAL DE BANQUETES</h2>
-                    <div id="lista-pedidos" style="max-height: 300px; overflow-y: auto;"></div>
+
+                    <h2 style="color: var(--cyan); text-shadow: 0 0 10px var(--cyan); margin-bottom: 20px; font-size: 1.5rem;">HISTORIAL DE BANQUETES</h2>
+                    <div id="lista-pedidos" style="max-height: 300px; overflow-y: auto;">
+                        </div>
                 </div>
             </div>
+
+            <div id="modal-bendiciones" class="modal-neon" style="display:none; position: fixed; z-index: 100020; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); align-items: center; justify-content: center;">
+                <div class="modal-content" style="background: #000; border: 2px solid var(--cyan); padding: 30px; width: 90%; max-width: 400px; border-radius: 20px; box-shadow: 0 0 30px var(--cyan); position: relative;">
+                    
+                    <span class="close-modal" onclick="cerrarBendiciones()" style="position: absolute; right: 20px; top: 15px; color: white; cursor: pointer; font-size: 1.5rem;">×</span>
+                    
+                    <h2 class="titulo-neon" style="text-align:center; font-size: 1.5rem; margin-bottom: 25px;">
+                        MIS <span class="palabra-rosa">BENDICIONES</span>
+                    </h2>
+
+                    <xsl:choose>
+                        <xsl:when test="/hamburgueseria/juego_ruleta/ya_jugo = 'si'">
+                            <div class="ticket-god" style="background: #0a0a0a; border: 2px dashed var(--pink); padding: 20px; border-radius: 10px; position: relative; box-shadow: 0 0 15px rgba(255,0,217,0.2);">
+                                <div style="position: absolute; left: -12px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; background: #000; border-radius: 50%; border: 2px solid var(--pink);"></div>
+                                <div style="position: absolute; right: -12px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; background: #000; border-radius: 50%; border: 2px solid var(--pink);"></div>
+
+                                <div style="text-align: center;">
+                                    <h3 style="color: white; margin: 0; font-size: 0.8rem; letter-spacing: 2px; opacity: 0.6;">CUPÓN DE REGALO</h3>
+                                    <p class="t-rosa" style="margin: 15px 0; font-weight: bold; font-size: 1.3rem; text-shadow: 0 0 10px var(--pink);">
+                                        <xsl:variable name="pID" select="/hamburgueseria/juego_ruleta/premio_destino"/>
+                                        <xsl:choose>
+                                            <xsl:when test="$pID = '1'">TITÁN GRATIS</xsl:when>
+                                            <xsl:when test="$pID = '2'">EL PECADO DE HADES GRATIS</xsl:when>
+                                            <xsl:when test="$pID = '3'">EL RAYO DE ZEUS GRATIS</xsl:when>
+                                            <xsl:when test="$pID = '4'">ATENEA GRATIS</xsl:when>
+                                            <xsl:when test="$pID = '5'">MEDUSA GRATIS</xsl:when>
+                                        </xsl:choose>
+                                    </p>
+                                    <p style="color: #666; font-size: 0.75rem; margin-bottom: 20px;">
+                                        VÁLIDO HASTA: <span style="color: var(--cyan);"><xsl:value-of select="/hamburgueseria/juego_ruleta/caducidad"/></span>
+                                    </p>
+                                    <button class="card-btn btn-latido" style="width: 100%; padding: 12px; font-weight: bold;">
+                                        <xsl:attribute name="onclick">
+                                            <xsl:text>canjearPremioDirecto('</xsl:text>
+                                            <xsl:variable name="pName" select="/hamburgueseria/juego_ruleta/premio_destino"/>
+                                            <xsl:choose>
+                                                <xsl:when test="$pName = '1'">TITÁN</xsl:when>
+                                                <xsl:when test="$pName = '2'">EL PECADO DE HADES</xsl:when>
+                                                <xsl:when test="$pName = '3'">EL RAYO DE ZEUS</xsl:when>
+                                                <xsl:when test="$pName = '4'">ATENEA</xsl:when>
+                                                <xsl:when test="$pName = '5'">MEDUSA</xsl:when>
+                                            </xsl:choose>
+                                            <xsl:text>')</xsl:text>
+                                        </xsl:attribute>
+                                        CANJEAR AHORA
+                                    </button>
+                                </div>
+                            </div>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <div style="text-align: center; padding: 30px; border: 1px solid #222; border-radius: 15px;">
+                                <p style="color: #555; font-style: italic; margin-bottom: 15px;">No tienes bendiciones activas hoy.</p>
+                                 <button onclick="cerrarBendiciones()" class="card-btn" style="cursor:pointer;">
+                                    VOLVER A LA FORJA
+                                </button>
+                            </div>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </div>
+            </div>
+            <xsl:if test="hamburgueseria/juego_ruleta/@activo = 'si'">
+                <div id="modal-ruleta" class="modal-neon" style="display:flex; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); align-items: center; justify-content: center;">
+                    <div class="modal-content" style="background: #000; border: 3px solid var(--pink); padding: 30px; border-radius: 20px; text-align: center; max-width: 450px; box-shadow: 0 0 30px var(--pink);">
+                        <h2 class="titulo-neon">LA SUERTE DE <span class="palabra-rosa">ZEUS</span></h2>
+                        <p style="color: white; margin-bottom: 20px;">¡Gira y reclama un manjar gratuito para tu banquete!</p>
+                        
+                        <div class="roulette-wrapper" style="position: relative; width: 300px; height: 300px; margin: 0 auto 30px;">
+                        <div id="wheel-pointer" style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); font-size: 30px; color: var(--cyan); z-index: 10;">▼
+                        </div>
+                        
+                        <div id="main-wheel" style="width: 100%; height: 100%; border-radius: 50%; border: 5px solid var(--cyan); position: relative; overflow: hidden; transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1); background: #111;">
+                            <div class="seg" style="--i:1;--clr:#e74c3c;position:absolute;width:50%;height:50%;transform-origin:bottom right;transform:rotate(72deg) skewY(-18deg);background:var(--clr);border:1px solid #000;"></div>
+                            <div class="seg" style="--i:2;--clr:#f1c40f;position:absolute;width:50%;height:50%;transform-origin:bottom right;transform:rotate(144deg) skewY(-18deg);background:var(--clr);border:1px solid #000;"></div>
+                            <div class="seg" style="--i:3;--clr:#3498db;position:absolute;width:50%;height:50%;transform-origin:bottom right;transform:rotate(216deg) skewY(-18deg);background:var(--clr);border:1px solid #000;"></div>
+                            <div class="seg" style="--i:4;--clr:#2ecc71;position:absolute;width:50%;height:50%;transform-origin:bottom right;transform:rotate(288deg) skewY(-18deg);background:var(--clr);border:1px solid #000;"></div>
+                            <div class="seg" style="--i:5;--clr:#9b59b6;position:absolute;width:50%;height:50%;transform-origin:bottom right;transform:rotate(360deg) skewY(-18deg);background:var(--clr);border:1px solid #000;"></div>
+                        </div>
+                    </div>  
+
+                        <input type="hidden" id="datos-premio" value="{hamburgueseria/juego_ruleta/premio_destino}" />
+                        
+                        <button id="btn-girar" class="checkout-btn" style="width: 100%; cursor: pointer;">¡PROBAR MI SUERTE!</button>
+                        <button onclick="document.getElementById('modal-ruleta').style.display='none'" style="background:none; border:none; color:#666; margin-top:15px; cursor:pointer;">Quizás en otra ocasión...</button>
+                    </div>
+                </div>
+            </xsl:if>
 
             <footer class="footer-bottom">
                 <p>© 2026 OLIMPO BURGUER - Diseñado por Oscar Casanova 1ºDAW</p>

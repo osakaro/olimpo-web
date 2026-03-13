@@ -169,6 +169,8 @@ function verificarSesion() {
     if (nombreUsuario && contenedores.length > 0) {
         contenedores.forEach(contenedor => {
             if (contenedor.querySelector('.user-dropdown')) return;
+            
+            // Ocultamos los botones de Entrar/Unirse
             contenedor.querySelectorAll('.user-access').forEach(btn => btn.style.display = 'none');
             
             const dropdown = document.createElement('div');
@@ -178,7 +180,9 @@ function verificarSesion() {
                     ⚡ ${nombreUsuario.toUpperCase()} ▼
                 </span>
                 <div id="userMenu" class="dropdown-user-content">
-                    <a href="javascript:void(0)" onclick="abrirHistorial()">MIS BANQUETES</a>
+                    <a href="javascript:void(0)" onclick="abrirHistorial()">🏛️ MIS BANQUETES</a>
+                    <a href="javascript:void(0)" onclick="abrirBendiciones()">✨ MIS BENDICIONES</a>
+                    <hr style="border: 0; border-top: 1px solid #222; margin: 5px 0;">
                     <a href="javascript:void(0)" onclick="cerrarSesion()" style="color: var(--pink);">CERRAR SESIÓN</a>
                 </div>`;
             contenedor.appendChild(dropdown);
@@ -330,12 +334,6 @@ window.iniciarPago = async function() {
         }
     } catch (e) { mostrarMensajeDivino("ERROR DE CONEXIÓN", "rosa"); }
 };
-
-
-
-
-
-
 
 /* CARGA DINÁMICA Y MODALES */
 window.abrirHistorial = async function() {
@@ -700,5 +698,118 @@ window.confirmarYAnadir = () => {
 
     } catch (error) {
         console.error("Error al confirmar burger:", error);
+    }
+};
+
+
+
+
+/* JUEGO DE LA RULETA */
+/* JUEGO DE LA RULETA - VERSIÓN FINAL REPARADA */
+/* JUEGO DE LA RULETA - VERSIÓN DEFINITIVA */
+document.addEventListener('DOMContentLoaded', () => {
+    const btnGirar = document.getElementById('btn-girar');
+    const wheel = document.getElementById('main-wheel');
+    const premioIdInput = document.getElementById('datos-premio');
+    const premios = ["TITÁN", "EL PECADO DE HADES", "EL RAYO DE ZEUS", "ATENEA", "MEDUSA"];
+
+    if (btnGirar) {
+        btnGirar.onclick = () => {
+            const emailUsuario = localStorage.getItem('mortal_email');
+
+            if (!emailUsuario) {
+                // Usamos window. para asegurar que encuentra la función
+                if (window.mostrarMensajeDivino) {
+                    window.mostrarMensajeDivino("MORTAL, INICIA SESIÓN PARA GUARDAR TU DESTINO", "rosa");
+                }
+                setTimeout(() => { if(window.abrirLogin) window.abrirLogin(); }, 1500);
+                return;
+            }
+
+            const premioId = parseInt(premioIdInput.value) || 1;
+            btnGirar.disabled = true;
+            btnGirar.style.opacity = "0.5";
+            btnGirar.innerText = "EL DESTINO ESTÁ ESCRITO...";
+
+            // Girar con aleatoriedad visual
+            const vueltasExtra = Math.floor(Math.random() * 5 + 5) * 360; 
+            const anguloPremio = ((premioId - 1) * 72) + 36;
+            const rotacionFinal = vueltasExtra - anguloPremio;
+
+            wheel.style.transition = "transform 5s cubic-bezier(0.15, 0, 0.15, 1)";
+            wheel.style.transform = `rotate(${rotacionFinal}deg)`;
+
+            // Esperamos a que termine de girar (5 segundos)
+            setTimeout(async () => {
+                const premioGanado = premios[premioId - 1];
+                
+                // 1. LANZAMOS EL MENSAJE POR ENCIMA DE TODO
+                if (window.mostrarMensajeDivino) {
+                    window.mostrarMensajeDivino(`⚡ ZEUS TE OTORGA: ${premioGanado} ⚡`, "cian");
+                }
+
+                // 2. GUARDAR EN SEGUNDO PLANO (sin bloquear el mensaje)
+                try {
+                    // Usamos la variable global API_URL
+                    await fetch(`${API_URL}/guardar-premio`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: emailUsuario, id_premio: premioId })
+                    });
+                } catch (error) {
+                    console.error("Error al guardar en el Olimpo:", error);
+                }
+
+                // 3. RETRASAMOS EL CIERRE (3 segundos para que de tiempo a ver el mensaje)
+                setTimeout(() => {
+                    const modalRuleta = document.getElementById('modal-ruleta');
+                    if (modalRuleta) modalRuleta.style.display = 'none';
+                    
+                    if (window.abrirBendiciones) {
+                        window.abrirBendiciones();
+                    }
+                }, 3000); 
+
+            }, 5000); // Fin del tiempo de giro
+        };
+    }
+});
+// Función para canjear desde el modal de Bendiciones
+// Hacemos la función global para que el botón del XSLT la vea
+window.canjearPremioDirecto = function(nombreProducto) {
+    if (typeof window.agregarAlCarrito === "function") {
+        // 1. Añadimos el regalo a precio 0.00
+        window.agregarAlCarrito(nombreProducto, "0.00");
+        
+        // 2. Cerramos el modal de bendiciones (usando la función de abajo)
+        window.cerrarBendiciones();
+        
+        // 3. Abrimos el carrito para que el usuario vea su premio
+        if (typeof window.toggleCart === "function") window.toggleCart();
+        
+        // 4. Mensaje épico de confirmación
+        if (typeof window.mostrarMensajeDivino === "function") {
+            window.mostrarMensajeDivino(`¡${nombreProducto} AÑADIDO POR ZEUS!`, "cian");
+        }
+    } else {
+        console.error("No se encontró la forja (carrito) para añadir el premio.");
+    }
+};
+
+// Control de apertura de Bendiciones
+window.abrirBendiciones = function() {
+    const modal = document.getElementById('modal-bendiciones');
+    if (modal) {
+        modal.style.display = 'flex';
+        const menu = document.getElementById('userMenu');
+        if (menu) menu.classList.remove('show');
+    }
+};
+
+// NUEVA: Función para cerrar el modal de Bendiciones
+window.cerrarBendiciones = function() {
+    const modal = document.getElementById('modal-bendiciones');
+    if (modal) {
+        modal.style.display = 'none';
     }
 };

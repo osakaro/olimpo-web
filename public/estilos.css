@@ -821,17 +821,35 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 
 /*  AVISOS NEÓN (NOTIFICACIONES)  */
 .notification {
-    position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.95); border: 2px solid var(--cyan);
-    color: #fff; padding: 15px 30px; border-radius: 10px;
-    box-shadow: var(--glow-c); z-index: 9999;
+    position: fixed; 
+    top: -100px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.95); 
+    border: 2px solid var(--cyan);
+    color: #fff; 
+    padding: 15px 30px; 
+    border-radius: 10px;
+    /* HEMOS SUBIDO EL Z-INDEX PARA QUE SUPERE AL MODAL */
+    z-index: 1000000 !important; 
     transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    text-transform: uppercase; font-family: 'Arial Black', sans-serif;
-    display: flex; align-items: center; gap: 10px;
+    text-transform: uppercase; 
+    font-family: 'Arial Black', sans-serif;
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
+    pointer-events: none; /* Para que no moleste si haces clic a través de ella */
+    white-space: nowrap; /* Para que el texto no se parta en dos líneas */
 }
 
-.notification.show { top: 40px; }
-.notification.rosa { border-color: var(--pink); box-shadow: var(--glow-p); }
+.notification.show { 
+    top: 40px; 
+}
+
+.notification.rosa { 
+    border-color: var(--pink); 
+    box-shadow: 0 0 20px var(--pink); 
+}
 
 /*  GRAFFITIS  */
 .divine-graffiti-container {
@@ -1537,4 +1555,68 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 /* (Truco: El texto que contiene '(' suele ser la personalización) */
 .cart-item span {
     font-family: 'Arial', sans-serif; /* Una fuente más limpia para los extras */
+}
+
+
+
+
+
+/*RULETA DE LA SUERTE*/
+@keyframes win-glow {
+    0% { box-shadow: 0 0 20px var(--pink); border-color: var(--pink); }
+    50% { box-shadow: 0 0 50px var(--cyan); border-color: var(--cyan); }
+    100% { box-shadow: 0 0 20px var(--pink); border-color: var(--pink); }
+}
+
+/*estilo cupón*/
+.ticket-god {
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.ticket-god:hover {
+    box-shadow: 0 0 20px var(--cyan) !important;
+    transform: translateY(-2px);
+}
+
+/* Estilo para el botón de canjear dentro del ticket */
+.ticket-god .card-btn {
+    background: var(--cyan);
+    color: black;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.ticket-god .card-btn:hover {
+    background: white;
+    box-shadow: 0 0 10px white;
+}
+
+
+#modal-ruleta {
+    background: rgba(0, 0, 0, 0.85); /* Bajamos la opacidad para ver el fondo */
+    backdrop-filter: blur(5px);      /* Este efecto difumina la página de fondo, queda de lujo */
+}
+
+/* Animación de latido neón */
+@keyframes heart-beat {
+    0% { transform: scale(1); box-shadow: 0 0 5px var(--cyan); }
+    50% { transform: scale(1.05); box-shadow: 0 0 20px var(--cyan); }
+    100% { transform: scale(1); box-shadow: 0 0 5px var(--cyan); }
+}
+
+.btn-latido {
+    animation: heart-beat 1.5s infinite ease-in-out;
+    background: var(--cyan) !important;
+    color: #000 !important;
+    border: none !important;
+    transition: 0.3s !important;
+}
+
+.btn-latido:hover {
+    transform: scale(1.1);
+    background: #fff !important;
+    box-shadow: 0 0 30px #fff !important;
 }

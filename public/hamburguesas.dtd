@@ -1,20 +1,24 @@
-<!ELEMENT hamburgueseria (hamburguesa | plato | bebida | postre | contacto)*>
+<!ELEMENT hamburgueseria (hamburguesa | plato | bebida | postre | contacto | juego_ruleta)*>
 
 <!ELEMENT hamburguesa (nombre, autor, precio, descripcion, frecuencia, imagen, ingredientes?, extras?)>
 <!ATTLIST hamburguesa 
           categoria CDATA #REQUIRED
-          sugerencia (si|no) "no">
+          sugerencia (si|no) #IMPLIED>
 
 <!ELEMENT plato (nombre, descripcion, precio, imagen, ingredientes?)>
 <!ATTLIST plato 
           categoria CDATA #REQUIRED
-          sugerencia (si|no) "no">
+          sugerencia (si|no) #IMPLIED>
 
 <!ELEMENT bebida (nombre, descripcion, precio, imagen)>
-<!ATTLIST bebida categoria CDATA #REQUIRED sugerencia (si|no) "no">
+<!ATTLIST bebida 
+          categoria CDATA #REQUIRED
+          sugerencia (si|no) #IMPLIED>
 
 <!ELEMENT postre (nombre, descripcion, precio, imagen)>
-<!ATTLIST postre categoria CDATA #REQUIRED sugerencia (si|no) "no">
+<!ATTLIST postre 
+          categoria CDATA #REQUIRED
+          sugerencia (si|no) #IMPLIED>
 
 <!ELEMENT nombre (#PCDATA)>
 <!ELEMENT autor (#PCDATA)>
@@ -36,3 +40,12 @@
 <!ELEMENT horario (#PCDATA)>
 <!ELEMENT telefono (#PCDATA)>
 <!ELEMENT mapa_url (#PCDATA)>
+
+<!ELEMENT juego_ruleta (usuario_logeado, ya_jugo, premio_destino, fecha_giro, caducidad)>
+<!ATTLIST juego_ruleta activo (si|no) #REQUIRED>
+
+<!ELEMENT usuario_logeado (#PCDATA)>
+<!ELEMENT ya_jugo (#PCDATA)>
+<!ELEMENT premio_destino (#PCDATA)>
+<!ELEMENT fecha_giro (#PCDATA)>
+<!ELEMENT caducidad (#PCDATA)>
