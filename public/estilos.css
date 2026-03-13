@@ -1,6 +1,4 @@
-/* ==========================================================================
-   1. VARIABLES Y CONFIGURACIÓN BASE
-   ========================================================================== */
+/* 1. VARIABLES Y CONFIGURACIÓN BASE */
 :root {
     --pink: #ff00d9;
     --cyan: #00f2ff;
@@ -9,13 +7,12 @@
     --bg-dark: #000;
 }
 
-/* CURSOR DEFINITIVO (En la raíz) */
 html, body {
-    /* Al estar en la misma carpeta, solo ponemos el nombre */
+    /* Misma carpeta, solo ponemos el nombre */
     cursor: url('cursor.png') 0 0, auto !important;
 }
 
-/* El tridente (o tu flecha) para los botones */
+/* El tridente (o flecha) para los botones */
 a, button, .card-btn, .dropbtn, #cart-icon, .close-cart, .btn-qty, .arrow {
     cursor: url('cursor.png') 0 0, pointer !important;
 }
@@ -57,7 +54,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     margin: 0; 
     background-color: #050505; 
     
-    /* LA MAGIA DE LOS DOS COLORES SOBRE EL LADRILLO */
+    /* DOS COLORES SOBRE EL LADRILLO */
     background-image: 
         /* Foco Cian (Izquierda) */
         radial-gradient(circle at 10% 30%, rgba(0, 242, 255, 0.12) 0%, transparent 50%),
@@ -72,9 +69,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     overflow-x: hidden; 
 }
 
-/* ==========================================================================
-   2. NAVEGACIÓN (NAVBAR & DROPDOWN)
-   ========================================================================== */
+/* 2. NAVEGACIÓN (NAVBAR & DROPDOWN) */
 .navbar {
     display: flex; 
     justify-content: space-between; 
@@ -167,9 +162,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 .dropdown-content a:hover { background: var(--pink); color: #000 !important; }
 .dropdown:hover .dropdown-content { display: block; }
 
-/* ==========================================================================
-   3. SECCIÓN HERO (Ajuste de líneas interiores)
-   ========================================================================== */
+/* 3. SECCIÓN HERO (Ajuste de líneas interiores)*/
 .hero { 
     position: relative; 
     height: 70vh; 
@@ -202,7 +195,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     opacity: 1 !important;
 }
 
-/* --- MOVIMIENTO DE LÍNEAS INTERIORES --- */
+/*  MOVIMIENTO DE LÍNEAS INTERIORES  */
 
 .l1 { 
     /* La primera se queda quieta */
@@ -210,7 +203,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 }
 
 .l2 { 
-    /* SUBE la segunda línea hacia la primera sin tocarla */
+    /* subo la segunda línea hacia la primera sin tocarla */
     margin-top: -40px !important; 
     /* Genera espacio por debajo para el eslogan */
     margin-bottom: 60px !important; 
@@ -238,9 +231,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     text-shadow: 0 0 15px #000, 0 0 30px #000; 
 }
 
-/* ==========================================================================
-   4. SECCIÓN CARTA (SLIDER DE HAMBURGUESAS)
-   ========================================================================== */
+/* 4. SECCIÓN CARTA (SLIDER DE HAMBURGUESAS) */
 .menu-god { 
     display: flex; 
     align-items: center; 
@@ -299,15 +290,12 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     transition: 0.3s;
 }
 
-/* ==========================================================================
-   5. SECCIÓN UBICACIÓN (ARREGLADA: TÍTULO GIGANTE CENTRADO)
-   ========================================================================== */
+/* 5. SECCIÓN UBICACIÓN (ARREGLADA: TÍTULO GIGANTE CENTRADO) */
 .location-section {
     position: relative; 
     padding: 80px 10%;
     background-color: #050505; 
     
-    /* CAPA DE LUCES: Hemos subido la opacidad de 0.07 a 0.2 para que brillen de verdad */
     background-image: 
         /* Foco Cian potente a la izquierda */
         radial-gradient(circle at 20% 30%, rgba(0, 242, 255, 0.15) 0%, transparent 50%),
@@ -318,7 +306,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
         /* La textura de ladrillo de siempre */
         url('https://www.transparenttextures.com/patterns/dark-brick-wall.png');
 
-    /* Mantenemos el tamaño original para que no se vea raro */
+    /* Mantengo el tamaño original para que no se vea raro */
     background-size: auto;
     background-attachment: fixed;
     
@@ -387,12 +375,12 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 }
 
 .info-card h3 {
-    color: #fff !important;        /* Forzamos letra blanca */
-    text-shadow: var(--glow-c);    /* Aplicamos el brillo azul (cian) */
+    color: #fff !important;        /* Fuerzo letra blanca */
+    text-shadow: var(--glow-c);    /* Aplico el brillo azul (cian) */
     margin: 0;
     font-size: 1.4rem;
     letter-spacing: 2px;
-    text-transform: uppercase;     /* Nos aseguramos de que sea todo mayúsculas */
+    text-transform: uppercase;     /* me aseguro de que sea todo mayúsculas */
 }
 
 .info-card p {
@@ -417,9 +405,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     height: 100%;
 }
 
-/* ==========================================================================
-   6. FOOTER Y REDES SOCIALES
-   ========================================================================== */
+/* 6. FOOTER Y REDES SOCIALES */
 .contact-section { 
     padding: 40px 20px; 
     background: var(--bg-dark); 
@@ -430,10 +416,10 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     text-align: center;
     background: rgba(0, 0, 0, 0.9);
     
-    /* CAMBIO: Aquí ponemos el azul (cian) en lugar del gris */
+    /* CAMBIO: Aquí pongo el azul (cian) en lugar del gris */
     border-top: 2px solid var(--cyan) !important;
     
-    /* Añadimos el resplandor para que no sea una línea sosa */
+    /* Añado el resplandor para que no sea una línea sosa */
     box-shadow: 0 -5px 15px rgba(0, 242, 255, 0.3);
     
     margin-top: 50px;
@@ -452,9 +438,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 
 .social-btn:hover { background: var(--cyan); color: #000; box-shadow: var(--glow-c); }
 
-/* ==========================================================================
-   7. ANIMACIONES Y EFECTOS (COLORES Y DIRECCIONES)
-   ========================================================================== */
+/* 7. ANIMACIONES Y EFECTOS (COLORES Y DIRECCIONES) */
 @keyframes moveR { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 @keyframes moveL { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes flicker-logo { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
@@ -473,9 +457,9 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     filter: drop-shadow(0 0 15px var(--pink));
 }
 
-/* Esto hace que las hamburguesas SÍ tengan color y no sean huecas */
+/* Esto hace que las hamburguesas tengan color y no sean huecas */
 .linea img {
-    color: white; /* Por si acaso */
+    color: white; 
     filter: brightness(1.2) 
             drop-shadow(0 0 10px #fff) 
             drop-shadow(0 0 20px inherit) !important;
@@ -497,38 +481,32 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 
 .arrow:hover { background: var(--cyan); color: #000; }
 
-/* ==========================================================================
-   1. REPARACIÓN DEL CONTENEDOR (Eliminamos la niebla)
-   ========================================================================== */
+
+/*  8. REPARACIÓN DEL CONTENEDOR (Elimino la niebla) */
 .parallax-bg {
-    opacity: 1 !important; /* Subimos a 1 para que el brillo sea real */
+    opacity: 1 !important; /* Subo a 1 para que el brillo sea real */
 }
 
-/* 2. Devolvemos la opacidad suave solo al TEXTO, pero NO a las imágenes */
+/* Devuelvo la opacidad suave solo al TEXTO, pero NO a las imágenes */
 .linea {
     opacity: 1 !important; 
 }
 
-/* ==========================================================================
-   ¡ESTO ES EL OLIMPO! - FUERZA BRUTA NEÓN PARA HAMBURGUESAS
-   Pon esto al final de tu CSS para asegurar que funcione.
-   ========================================================================== */
 
-/* 1. Selector agresivo para forzar el brillo sobre tu imagen actual */
+/* Selector agresivo para forzar el brillo sobre tu imagen actual */
 .linea img {
     opacity: 1 !important; /* El icono debe ser visible al 100% */
     
-    /* 2. Truco técnico: limpiamos la imagen y la volvemos incandescente */
-    /* Primero la aclaramos, luego subimos el contraste */
+    /* Primero la aclaro, luego subo el contraste */
     filter: brightness(1.2) contrast(1.1) 
             drop-shadow(0 0 10px #fff) !important; /* Núcleo de luz blanca */
     
-    /* Preparamos la transición para la animación */
+    /* Preparo la transición para la animación */
     transition: all 0.3s ease-in-out;
 }
 
-/* 3. --- Brillo CIAN Potente (como el de tus letras 'SUGERENCIAS') --- */
-/* Lo aplicamos a las líneas 1 y 3 */
+/* Brillo CIAN Potente (como 'SUGERENCIAS')  */
+/* Lo aplico a las líneas 1 y 3 */
 .l1 img, .l3 img {
     filter: brightness(1.2) contrast(1.1) 
             drop-shadow(0 0 10px #fff)              /* Núcleo blanco */
@@ -537,8 +515,8 @@ body, .body-entrantes, .body-bebidas, .body-postres {
             drop-shadow(0 0 45px var(--cyan)) !important; /* Aura en la pared */
 }
 
-/* 4. --- Brillo ROSA Potente (como el de tus letras 'DEL DÍA') --- */
-/* Lo aplicamos a las líneas 2 y 4 */
+/* 4. Brillo ROSA Potente (como el 'DEL DÍA') */
+/* Lo aplico a las líneas 2 y 4 */
 .l2 img, .l4 img {
     filter: brightness(1.2) contrast(1.1) 
             drop-shadow(0 0 10px #fff)              /* Núcleo blanco */
@@ -547,10 +525,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
             drop-shadow(0 0 45px var(--pink)) !important; /* Aura en la pared */
 }
 
-/* ========================================================================== */
-/* ==========================================================================
-   8. MEDIA QUERIES (MÓVIL)
-   ========================================================================== */
+/*  9. MEDIA QUERIES (MÓVIL)*/
 @media (max-width: 700px) {
     .navbar { padding: 0 20px; height: 80px; }
     .nav-title { font-size: 1.2rem; }
@@ -571,9 +546,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     .titulo-neon { font-size: 2.5rem; }
 }
 
-/* ==========================================================================
-   9. SECCIONES ESPECÍFICAS (ELIXIRES Y AMBROSÍAS)
-   ========================================================================== */
+/* 10. SECCIONES ESPECÍFICAS (ELIXIRES Y AMBROSÍAS) */
 .hero-mini {
     height: 35vh;
     display: flex;
@@ -595,9 +568,10 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     margin: 0 auto;
 }
 
-/* ==========================================================================
-   9. SECCIONES ESPECÍFICAS (DISEÑO "A SANGRE" - MODO GIGANTE)
-   ========================================================================== */
+
+
+
+/* 11. SECCIONES ESPECÍFICAS (DISEÑO "A SANGRE" - MODO GIGANTE) */
 
 .bebida-card {
     position: relative; /* Necesario para que el texto flote sobre la imagen */
@@ -682,9 +656,9 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 .postre-info { padding: 30px; display: flex; flex-direction: column; justify-content: center; }
 
 
-/* ==========================================================================
-    10. SISTEMA DE CARRITO Y NOTIFICACIONES (IMPECABLE)
-    ========================================================================== */
+
+
+/* 12. SISTEMA DE CARRITO Y NOTIFICACIONES (IMPECABLE) */
 
 #cart-icon {
     background: #000; border: 2px solid var(--cyan); color: #fff;
@@ -721,12 +695,12 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 #cart-items { 
     flex-grow: 1; 
     overflow-y: auto; /* Permite bajar si hay muchas hamburguesas */
-    overflow-x: hidden; /* ELIMINA LA BARRA GRIS HORIZONTAL */
+    overflow-x: hidden; /* ELIMINO LA BARRA GRIS HORIZONTAL */
     color: #fff; 
     margin-bottom: 20px;
     padding-right: 10px; /* Evita que el texto choque con el borde */
 }
-/* --- PERSONALIZACIÓN DEL SCROLL VERTICAL --- */
+/*  PERSONALIZACIÓN DEL SCROLL VERTICAL  */
 #cart-items::-webkit-scrollbar {
     width: 6px;
 }
@@ -740,7 +714,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 #cart-items::-webkit-scrollbar-track {
     background: transparent;
 }
-/* --- ESTILOS DE PRODUCTOS AGRUPADOS --- */
+/*  ESTILOS DE PRODUCTOS AGRUPADOS  */
 .cart-item {
     display: flex; justify-content: space-between; align-items: center;
     padding: 12px 0; border-bottom: 1px solid #222;
@@ -775,7 +749,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     text-align: center; font-family: 'Arial Black', sans-serif;
 }
 
-/* --- FOOTER DEL PANEL --- */
+/*  FOOTER DEL PANEL  */
 .cart-footer-panel {
     border-top: 2px solid var(--cyan); padding-top: 20px;
     display: flex; flex-direction: column; gap: 15px;
@@ -821,7 +795,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     color: var(--cyan);
     text-align: center;
     line-height: 1.3;
-    /* Aplicamos la animación de parpadeo */
+    /* Aplico la animación de parpadeo */
     animation: flickerNeon 3s infinite;
 }
 
@@ -845,7 +819,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 
 .clear-btn:hover { border-color: var(--pink); color: var(--pink); background: rgba(255, 0, 217, 0.1); }
 
-/* --- AVISOS NEÓN (NOTIFICACIONES) --- */
+/*  AVISOS NEÓN (NOTIFICACIONES)  */
 .notification {
     position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.95); border: 2px solid var(--cyan);
@@ -859,7 +833,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 .notification.show { top: 40px; }
 .notification.rosa { border-color: var(--pink); box-shadow: var(--glow-p); }
 
-/* --- GRAFFITIS --- */
+/*  GRAFFITIS  */
 .divine-graffiti-container {
     position: absolute; top: 0; left: 0; width: 100%; height: 250px;
     pointer-events: none; z-index: 1; overflow: visible !important;
@@ -880,9 +854,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     90% { opacity: 1; }
     100% { opacity: 0; transform: translateY(-20px); }
 }
-/* ==========================================================================
-    11. ACCESO DE USUARIO (ZEUS PERSONALIZADO)
-   ========================================================================== */
+/*  13. ACCESO DE USUARIO (ZEUS PERSONALIZADO) */
 .user-access {
     display: flex;
     flex-direction: column;
@@ -914,9 +886,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 .user-access:hover .zeus-nav-icon { filter: drop-shadow(0 0 12px var(--pink)); transform: scale(1.1); }
 .user-access:hover span { color: var(--cyan); text-shadow: 0 0 10px var(--cyan); }
 
-/* ==========================================================================
-    12. MODAL DE REGISTRO (DISEÑO FINAL: ROSA vs CIAN)
-   ========================================================================== */
+/* 14. MODAL DE REGISTRO (DISEÑO FINAL: ROSA vs CIAN) */
    
 /* Estilo base para todos los modales neón (Registro y Login) */
 .neon-modal {
@@ -928,7 +898,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     
     width: 90%;
     max-width: 400px;
-    height: auto !important; /* <--- ESTO ES LA CLAVE para que sea pequeño */
+    height: auto !important; /* CLAVE para que sea pequeño */
     min-height: auto !important;
     
     background: #000 !important;
@@ -943,7 +913,6 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     display: block !important;
 }
 
-/* Si quieres que el de login tenga el borde cian como el botón de abajo */
 #modal-login {
     border-color: var(--cyan) !important;
     box-shadow: 0 0 30px var(--cyan) !important;
@@ -1014,9 +983,10 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     to { opacity: 1; text-shadow: 0 0 20px var(--cyan), 0 0 30px var(--cyan); }
 }
 
-/* ==========================================================================
-   MENU DESPLEGABLE DEL USUARIO (DISEÑO FINAL LIMPIO)
-   ========================================================================== */
+
+
+
+/*  MENU DESPLEGABLE DEL USUARIO (DISEÑO FINAL LIMPIO)*/
 .user-dropdown {
     position: relative;
     display: inline-block;
@@ -1043,7 +1013,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 }
 
 /* El contenedor del menú (Dropdown) */
-/* --- ESTILO LIMPIO PARA EL MENÚ DESPLEGABLE --- */
+/*  ESTILO LIMPIO PARA EL MENÚ DESPLEGABLE  */
 .dropdown-user-content {
     display: none;
     position: absolute;
@@ -1054,14 +1024,14 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     border: 2px solid var(--cyan);
     box-shadow: 0 0 15px var(--cyan);
     
-    /* CAMBIO CLAVE: Sube el z-index para estar sobre todo lo demás */
+    /* CAMBIO CLAVE: Subi el z-index para estar sobre todo lo demás */
     z-index: 10005 !important; 
     
     border-radius: 10px;
     margin-top: 15px;
     padding: 5px 0;
 
-    /* CAMBIO CLAVE: Evita que aparezcan barras de scroll */
+    /* CAMBIO CLAVE: Evito que aparezcan barras de scroll */
     overflow: visible !important; 
     height: auto !important; 
 }
@@ -1071,7 +1041,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     background: transparent !important;
     padding: 12px 25px; /* 25px de margen a la izquierda para que no toque el borde */
     text-decoration: none;
-    display: block; /* Volvemos a block para alinear a la izquierda */
+    display: block; /* Vuelvo a block para alinear a la izquierda */
     font-size: 0.85rem;
     font-family: 'Arial Black', sans-serif;
     transition: 0.3s;
@@ -1097,7 +1067,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- MODAL DEL HISTORIAL (REVISADO Y FUNCIONAL) --- */
+/*  MODAL DEL HISTORIAL (REVISADO Y FUNCIONAL)  */
 .modal-neon {
     display: none; /* Se activa por JS */
     position: fixed;
@@ -1158,10 +1128,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 .pedido-total { color: var(--pink); font-weight: bold; }
 .pedido-productos { color: #fff; font-size: 0.9rem; }
 
-/* ==========================================================================
-    12. ¡ESTO ES ESPARTA! - RESET TOTAL (ESTIRADO AGRESIVO)
-   ========================================================================== */
-
+ 
 .god-card {
     display: flex !important; 
     position: relative !important;
@@ -1175,7 +1142,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     background: #000 !important;
 }
 
-/* LA SOLUCIÓN DEFINITIVA: Estiramos la caja de la imagen un 2% más de lo que mide */
+/* SOLUCIÓN DEFINITIVA: Estiro la caja de la imagen un 2% más de lo que mide */
 .card-img-side {
     position: absolute !important;
     top: -5px !important;    /* Sale un poco por arriba */
@@ -1216,9 +1183,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     width: 100% !important;
     margin-top: 15px !important;
 }
-/* ==========================================================================
-   INTERACTIVIDAD: BRILLO DE BOTONES (HOVER)
-   ========================================================================== */
+/*  INTERACTIVIDAD: BRILLO DE BOTONES (HOVER) */
 
 /* 1. EFECTO PARA LAS HAMBURGUESAS (Botón Rosa) */
 .card-btn:hover {
@@ -1229,7 +1194,6 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 }
 
 /* 2. EFECTO PARA BEBIDAS, ENTRANTES Y POSTRES (Botón Cian/Rosa) */
-/* Dependiendo de si el botón es cian o rosa en esas secciones */
 .bebida-btn:hover, .unirse-btn:hover, .checkout-btn:hover {
     transform: scale(1.05);
     filter: brightness(1.2);
@@ -1247,9 +1211,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     box-shadow: var(--glow-c) !important;
     transform: scale(1.1);
 }
-/* ==========================================================================
-   FIDELIDAD: ESTILOS FINALES (EL 6 Y EL BOTÓN)
-   ========================================================================== */
+/* ESTILOS FINALES (EL 6 Y EL BOTÓN) */
 
 /* 1. EL 6: Texto blanco con resplandor neón rosa potente */
 .puntos-numero-god {
@@ -1310,11 +1272,11 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     box-shadow: 0 0 10px var(--pink);
 }
 
-/* Forzamos que el botón se vea sí o sí */
+/* Fuerzo que el botón se vea sí o sí */
 #btn-activar-bendicion {
     background: var(--pink) !important;
     color: white !important;
-    display: block; /* Aseguramos que no herede un 'none' */
+    display: block; /* Aseguro que no herede un 'none' */
     margin: 15px 0;
     padding: 12px;
     border: none;
@@ -1329,9 +1291,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 
 
 
-/* =============================================================
-   1. BOTÓN HAMBURGUESA Y CAPAS (FUERA DE MEDIA QUERIES)
-   ============================================================= */
+/* BOTÓN HAMBURGUESA Y CAPAS (FUERA DE MEDIA QUERIES */
 .menu-toggle {
     display: none; /* Se oculta en PC */
     flex-direction: column;
@@ -1353,12 +1313,8 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 #cart-panel { z-index: 30000 !important; }
 .notification { z-index: 40000 !important; }
 
-/* =============================================================
-   2. CONFIGURACIÓN PARA MÓVIL (PANTALLAS < 700px)
-   ============================================================= */
-/* =============================================================
-   RESET MÓVIL TOTAL (PANTALLAS < 700px)
-   ============================================================= */
+/* 2. CONFIGURACIÓN PARA MÓVIL (PANTALLAS < 700px) 
+   RESET MÓVIL TOTAL (PANTALLAS < 700px) */
 @media (max-width: 700px) {
 
     /* 1. ESTRUCTURA GLOBAL Y NAVBAR */
@@ -1383,7 +1339,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
 
     .nav-title { display: none !important; }
 
-    /* BOTONES ENTRAR/ÚNETE: Máxima prioridad para que no se escondan */
+    /* BOTONES ENTRAR/ÚNETE: prioridad para que no se escondan */
     .user-access {
         z-index: 10005 !important; 
         position: relative;
@@ -1396,7 +1352,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     }
 
     .nav-links {
-        display: none; /* <--- ESTO lo esconde por defecto */
+        display: none; /* ESTO lo esconde por defecto */
         flex-direction: column !important;
         position: fixed !important;
         top: 70px; 
@@ -1453,7 +1409,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
         width: 85% !important;
         padding: 10px !important;
         border-radius: 10px;
-        margin: 0 !important; /* Eliminamos márgenes que lo desplacen */
+        margin: 0 !important; /* Elimino márgenes*/
     }
 
     /* 4. SUGERENCIAS (VERTICALES HACIA ABAJO) */
@@ -1507,7 +1463,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     
     .dropdown-user-content {
         display: none; /* Escondido por defecto */
-        position: absolute !important; /* <--- CLAVE: Para que no empuje nada */
+        position: absolute !important; /* CLAVE: Para que no empuje nada */
         top: 100% !important; /* Se pega justo debajo del nombre */
         left: 50% !important;
         transform: translateX(-50%) !important; /* Centrado perfecto */
@@ -1560,7 +1516,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     .hero, .parallax-bg {
         z-index: 1 !important; /* Todo el fondo se queda al nivel 1 */
     }
-    /* FORZAR QUE EL HISTORIAL SALGA POR ENCIMA DE TODO */
+    /* FUERZO QUE EL HISTORIAL SALGA POR ENCIMA DE TODO */
     #modal-historial {
         z-index: 999999 !important;    /* El número más alto para que nada lo tape */
         background: #000 !important;   /* Fondo negro sólido para tapar el fondo */
@@ -1577,7 +1533,7 @@ body, .body-entrantes, .body-bebidas, .body-postres {
     line-height: 1.2;
 }
 
-/* Ponemos los paréntesis en otro color y más pequeños */
+/* Pongo los paréntesis en otro color y más pequeños */
 /* (Truco: El texto que contiene '(' suele ser la personalización) */
 .cart-item span {
     font-family: 'Arial', sans-serif; /* Una fuente más limpia para los extras */

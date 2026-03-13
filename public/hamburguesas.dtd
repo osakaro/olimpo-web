@@ -1,8 +1,20 @@
-<!ELEMENT hamburgueseria (hamburguesa+)>
+<!ELEMENT hamburgueseria (hamburguesa | plato | bebida | postre | contacto)*>
 
-<!ELEMENT hamburguesa (nombre, autor, precio, descripcion, frecuencia, imagen)>
+<!ELEMENT hamburguesa (nombre, autor, precio, descripcion, frecuencia, imagen, ingredientes?, extras?)>
+<!ATTLIST hamburguesa 
+          categoria CDATA #REQUIRED
+          sugerencia (si|no) "no">
 
-<!ATTLIST hamburguesa categoria CDATA #REQUIRED>
+<!ELEMENT plato (nombre, descripcion, precio, imagen, ingredientes?)>
+<!ATTLIST plato 
+          categoria CDATA #REQUIRED
+          sugerencia (si|no) "no">
+
+<!ELEMENT bebida (nombre, descripcion, precio, imagen)>
+<!ATTLIST bebida categoria CDATA #REQUIRED sugerencia (si|no) "no">
+
+<!ELEMENT postre (nombre, descripcion, precio, imagen)>
+<!ATTLIST postre categoria CDATA #REQUIRED sugerencia (si|no) "no">
 
 <!ELEMENT nombre (#PCDATA)>
 <!ELEMENT autor (#PCDATA)>
@@ -10,3 +22,17 @@
 <!ELEMENT descripcion (#PCDATA)>
 <!ELEMENT frecuencia (#PCDATA)>
 <!ELEMENT imagen (#PCDATA)>
+
+<!ELEMENT ingredientes (item+)>
+<!ELEMENT item (#PCDATA)>
+<!ATTLIST item modificable (si|no) "no">
+
+<!ELEMENT extras (suplemento+)>
+<!ELEMENT suplemento (#PCDATA)>
+<!ATTLIST suplemento precio CDATA #REQUIRED>
+
+<!ELEMENT contacto (direccion, horario, telefono, mapa_url)>
+<!ELEMENT direccion (#PCDATA)>
+<!ELEMENT horario (#PCDATA)>
+<!ELEMENT telefono (#PCDATA)>
+<!ELEMENT mapa_url (#PCDATA)>
