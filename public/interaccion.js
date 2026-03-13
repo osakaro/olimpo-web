@@ -1,6 +1,4 @@
-/* ==========================================================================
-   1. CONFIGURACIÓN, ESTADO GLOBAL Y UTILIDADES
-   ========================================================================== */
+/* CONFIGURACIÓN, ESTADO GLOBAL Y UTILIDADES */
 const API_URL = 'https://olimpo-web.onrender.com';
 let carrito = JSON.parse(localStorage.getItem('olimpo_cart')) || [];
 let salirPorIzquierda = true; 
@@ -14,9 +12,12 @@ const frasesOlimpo = [
     "No aceptamos sacrificios"
 ];
 
-/* ==========================================================================
-   2. SISTEMA DE NOTIFICACIONES Y SONIDO
-   ========================================================================== */
+
+
+
+
+
+/* SISTEMA DE NOTIFICACIONES Y SONIDO */
 window.mostrarMensajeDivino = function(texto, tipo = 'cian') {
     const aviso = document.createElement('div');
     aviso.classList.add('notification');
@@ -38,9 +39,12 @@ window.reproducirSonido = function() {
     }
 };
 
-/* ==========================================================================
-   3. GESTIÓN DEL CARRITO (LÓGICA E INTERFAZ)
-   ========================================================================== */
+
+
+
+
+
+/* GESTIÓN DEL CARRITO (LÓGICA E INTERFAZ) */
 window.toggleCart = function() {
     const panel = document.getElementById('cart-panel');
     if (panel) panel.classList.toggle('open');
@@ -76,15 +80,14 @@ window.actualizarInterfaz = function() {
             </div>`;
     });
 
-    // Lógica de costes y beneficios
-    // --- LÓGICA DE COSTES Y BENDICIÓN (CÓDIGO DEFINITIVO) ---
+    // LÓGICA DE COSTES Y BENDICIÓN (CÓDIGO DEFINITIVO)
     const costoEnvio = 4.99;
     const gratisAPartirDe = 50;
     const esGratis = subtotalGeneral >= gratisAPartirDe;
 
-    // 1. ¿El usuario ha reclamado el premio en "Mis Banquetes"?
+    // ¿El usuario ha reclamado el premio en "Mis Banquetes"?
     const premioReclamado = localStorage.getItem('descuento_olimpo') === '10';
-    // 2. ¿Ya le ha dado al botón rosa de "Aplicar" dentro del carrito?
+    // ¿Ya le ha dado al botón rosa de "Aplicar" dentro del carrito?
     const descuentoYaActivado = localStorage.getItem('descuento_activado_en_carrito') === 'si';
 
     let totalFinal = (esGratis || subtotalGeneral === 0) ? subtotalGeneral : subtotalGeneral + costoEnvio;
@@ -153,9 +156,12 @@ window.vaciarCarrito = function() {
     mostrarMensajeDivino("CARRITO PURIFICADO", "rosa");
 };
 
-/* ==========================================================================
-   4. SISTEMA DE USUARIO Y AUTENTICACIÓN
-   ========================================================================== */
+
+
+
+
+
+/* SISTEMA DE USUARIO Y AUTENTICACIÓN */
 function verificarSesion() {
     const nombreUsuario = localStorage.getItem('mortal_nombre');
     const contenedores = document.querySelectorAll('.nav-wrapper');
@@ -237,9 +243,12 @@ function configurarEnvioLogin() {
 window.toggleUserMenu = () => document.getElementById('userMenu')?.classList.toggle('show');
 window.cerrarSesion = () => { localStorage.clear(); location.reload(); };
 
-/* ==========================================================================
-   5. FIDELIDAD Y PAGOS
-   ========================================================================== */
+
+
+
+
+
+/* FIDELIDAD Y PAGOS */
 function actualizarPuntosFidelidad(puntosReales) {
     const puntos = puntosReales || 0;
     localStorage.setItem('mortal_puntos', puntos);
@@ -257,10 +266,10 @@ function actualizarPuntosFidelidad(puntosReales) {
     
     if(btn) {
         if(puntos >= 10) {
-            btn.style.display = 'block'; // Lo mostramos
+            btn.style.display = 'block'; // Lo muestro
             if(txt) txt.innerHTML = `<span style="color: var(--pink); font-weight: bold;">¡BENDICIÓN DE 5€ LISTA!</span>`;
         } else {
-            btn.style.display = 'none'; // Lo ocultamos
+            btn.style.display = 'none'; // Lo oculo
             const faltan = 10 - (puntos % 10);
             if(txt) txt.innerHTML = `¡Te faltan ${faltan} puntos para tu próximo descuento!`;
         }
@@ -322,9 +331,13 @@ window.iniciarPago = async function() {
     } catch (e) { mostrarMensajeDivino("ERROR DE CONEXIÓN", "rosa"); }
 };
 
-/* ==========================================================================
-   6. CARGA DINÁMICA Y MODALES
-   ========================================================================== */
+
+
+
+
+
+
+/* CARGA DINÁMICA Y MODALES */
 window.abrirHistorial = async function() {
     const email = localStorage.getItem('mortal_email');
     const modal = document.getElementById('modal-historial');
@@ -363,13 +376,13 @@ window.abrirHistorial = async function() {
         const puntos = data.puntos || 0;
         localStorage.setItem('mortal_puntos', puntos);
 
-        // Calculamos aquí si debe verse el botón
+        // Calculo aquí si debe verse el botón
         const mostrarBoton = puntos >= 10 ? 'block' : 'none';
         const textoPremio = puntos >= 10 
             ? '<span style="color: var(--pink); font-weight: bold;">¡BENDICIÓN DE 5€ LISTA!</span>' 
             : `¡Te faltan ${10 - (puntos % 10)} puntos para tu próximo descuento!`;
 
-        // Inyectamos TODO el modal de una vez con los datos reales
+        // Inyecto TODO el modal de una vez con los datos reales
         modal.innerHTML = `
             <div class="modal-content">
                 <span class="close-modal" onclick="cerrarHistorial()">×</span>
@@ -400,7 +413,7 @@ window.abrirHistorial = async function() {
                 </div>
             </div>`;
 
-        // Renderizamos los pedidos en el contenedor que acabamos de crear
+        // Renderizo los pedidos en el contenedor que acabo de crear
         const contenedor = document.getElementById('lista-pedidos');
         data.pedidos.forEach(p => {
             contenedor.innerHTML += `
@@ -425,20 +438,21 @@ window.abrirHistorial = async function() {
 
 // Controles de visibilidad de modales
 window.abrirRegistro = () => {
-    // 1. CÓDIGO AÑADIDO: Cerramos el menú móvil y el menú de Oscar para que no estorbe
+    // 1. Limpieza de menús abiertos para que no estorben al modal
     const navLinks = document.querySelector('.nav-links');
     if (navLinks) {
         navLinks.classList.remove('active');
     }
+    
     const userMenu = document.getElementById('userMenu');
     if (userMenu) {
         userMenu.classList.remove('show');
     }
 
-    // 2. Tu código original para abrir el modal de registro
+    // 2. Abrir el modal de registro con animación
     const m = document.getElementById('modal-registro');
     if(m) { 
-        m.style.display='block'; 
+        m.style.display = 'block'; 
         setTimeout(() => m.classList.add('open'), 10); 
     }
 };
@@ -446,26 +460,13 @@ window.cerrarHistorial = () => {
     const m = document.getElementById('modal-historial');
     if(m) { m.classList.remove('open'); setTimeout(() => m.style.display='none', 300); }
 };
-window.abrirRegistro = () => {
-    // 1. CÓDIGO AÑADIDO: Cerramos el menú móvil para que no estorbe
-    const navLinks = document.querySelector('.nav-links');
-    if (navLinks) {
-        navLinks.classList.remove('active');
-    }
 
-    // 2.código original para abrir el modal de registro
-    const m = document.getElementById('modal-registro');
-    if(m) { 
-        m.style.display='block'; 
-        setTimeout(() => m.classList.add('open'), 10); 
-    }
-};
 window.cerrarRegistro = () => {
     const m = document.getElementById('modal-registro');
     if(m) { m.classList.remove('open'); setTimeout(() => m.style.display='none', 300); }
 };
 window.abrirLogin = () => {
-    // 1. Cerramos el menú móvil y el menú
+    // 1. Cierro el menú móvil y el menú
     const navLinks = document.querySelector('.nav-links');
     if (navLinks) {
         navLinks.classList.remove('active');
@@ -486,9 +487,13 @@ window.cerrarLogin = () => {
     if(m) { m.classList.remove('open'); setTimeout(() => m.style.display='none', 300); }
 };
 
-/* ==========================================================================
-   7. EFECTOS VISUALES Y EVENTOS INICIALES
-   ========================================================================== */
+
+
+
+
+
+
+/* EFECTOS VISUALES Y EVENTOS INICIAL */
 function lanzarGraffiti() {
     const contenedor = document.querySelector('.location-section .divine-graffiti-container');
     if (!contenedor) return;
@@ -543,13 +548,11 @@ window.onload = () => {
     configurarEnvioRegistro();
 };
 
-// Función para abrir/cerrar manual (la que ya tienes)
 
-/* ==========================================================================
-   GESTIÓN DE MENÚS INTELIGENTE (EVITAR CONFLICTOS)
-   ========================================================================== */
 
-// 1. Función para el Menú Móvil (Hamburguesa)
+/* GESTIÓN DE MENÚS INTELIGENTE (EVITAR CONFLICTOS) */
+
+// Función para el Menú Móvil (Hamburguesa)
 // Función para el botón hamburguesa
 window.toggleMobileMenu = function() {
     const navLinks = document.querySelector('.nav-links');
@@ -560,12 +563,12 @@ window.toggleMobileMenu = function() {
 };
 
 window.toggleUserMenu = function(event) {
-    // 1. Evitamos que el clic se propague y cierre el menú móvil por error
+    // 1. Evito que el clic se propague y cierre el menú móvil por error
     if (event) event.stopPropagation();
 
     const userMenu = document.getElementById('userMenu');
     if (userMenu) {
-        // Alternamos la clase show
+        // Alterno la clase show
         userMenu.classList.toggle('show');
     }
 };
@@ -586,7 +589,7 @@ document.addEventListener('click', function(event) {
 window.agregarAlCarrito = function(nombre, precio) {
     window.reproducirSonido();
     
-    // Buscamos si ya existe ese producto exacto (con los mismos extras)
+    // Busca si ya existe ese producto exacto (con los mismos extras)
     const prodExistente = carrito.find(item => item.nombre === nombre);
     
     if (prodExistente) {
@@ -604,20 +607,20 @@ window.agregarAlCarrito = function(nombre, precio) {
     window.actualizarInterfaz();
 };
 
-/* --- LÓGICA DE PERSONALIZACIÓN DINÁMICA --- */
+/* LÓGICA DE PERSONALIZACIÓN DINÁMICA */
 let currentBurger = { nombre: '', precioBase: 0, total: 0 };
 
 window.abrirConfigurador = (nombre, precio, ingredientesString, extrasString) => {
-    // 1. Guardamos datos
+    // 1. Guarda datos
     currentBurger.nombre = nombre;
     currentBurger.precioBase = parseFloat(precio);
     currentBurger.total = currentBurger.precioBase;
 
-    // 2. Actualizamos textos del modal
+    // 2. Actualizo textos del modal
     document.getElementById('p-nombre').innerText = nombre;
     document.getElementById('p-total').innerText = currentBurger.total.toFixed(2);
     
-    // 3. Procesamos ingredientes (lo que el XSLT manda separado por comas)
+    // 3. Procesa ingredientes (lo que el XSLT manda separado por comas)
     const ingDiv = document.getElementById('lista-ingredientes');
     if (ingredientesString && ingredientesString.trim() !== "") {
         const listaIng = ingredientesString.split(', ');
@@ -631,7 +634,7 @@ window.abrirConfigurador = (nombre, precio, ingredientesString, extrasString) =>
         ingDiv.innerHTML = "<p style='color:#666; font-size:0.8rem;'>Receta única de los Dioses</p>";
     }
 
-    // 4. Procesamos extras
+    // 4. Procesa extras
     const extDiv = document.getElementById('lista-extras');
     if (extrasString && extrasString.trim() !== "") {
         const listaExt = extrasString.split(', ');
