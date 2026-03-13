@@ -99,11 +99,4 @@
         <telefono>672863340</telefono>
         <mapa_url>https://goo.gl/maps/tu_enlace_aqui</mapa_url>
     </contacto>
-    <juego_ruleta activo="si">
-        <usuario_logeado>si</usuario_logeado>
-        <ya_jugo>no</ya_jugo>
-        <premio_destino>1</premio_destino>
-        <fecha_giro>2026-03-13</fecha_giro>
-        <caducidad>2026-03-20</caducidad>
-    </juego_ruleta>
 </hamburgueseria>
