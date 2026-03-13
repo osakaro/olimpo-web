@@ -192,7 +192,7 @@
                 </div>
             </div>
 
-            <div id="notification-container" class="notification"></div>
+            
             <audio id="sonido-clic" src="sonido clic.mp3" preload="auto"></audio>
             <div id="contenedor-registro"></div>
             <div id="contenedor-login"></div>
@@ -304,7 +304,7 @@
                         </div>
                     </div>  
 
-                        <input type="hidden" id="datos-premio" value="{hamburgueseria/juego_ruleta/premio_destino}" />
+                        <input type="hidden" id="datos-premio" value="{/hamburgueseria/juego_ruleta/premio_destino}" />
                         
                         <button id="btn-girar" class="checkout-btn" style="width: 100%; cursor: pointer;">¡PROBAR MI SUERTE!</button>
                         <button onclick="document.getElementById('modal-ruleta').style.display='none'" style="background:none; border:none; color:#666; margin-top:15px; cursor:pointer;">Quizás en otra ocasión...</button>

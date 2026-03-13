@@ -717,12 +717,19 @@ document.addEventListener('DOMContentLoaded', () => {
         btnGirar.onclick = () => {
             const emailUsuario = localStorage.getItem('mortal_email');
 
+            // --- CAMBIO 1: CERRAR RULETA ANTES DE ABRIR LOGIN ---
             if (!emailUsuario) {
-                // Usamos window. para asegurar que encuentra la función
                 if (window.mostrarMensajeDivino) {
                     window.mostrarMensajeDivino("MORTAL, INICIA SESIÓN PARA GUARDAR TU DESTINO", "rosa");
                 }
-                setTimeout(() => { if(window.abrirLogin) window.abrirLogin(); }, 1500);
+                
+                // Cerramos el modal de la ruleta para que no tape el login
+                const modalRuleta = document.getElementById('modal-ruleta');
+                if (modalRuleta) modalRuleta.style.display = 'none';
+
+                setTimeout(() => { 
+                    if(window.abrirLogin) window.abrirLogin(); 
+                }, 500);
                 return;
             }
 
@@ -731,7 +738,6 @@ document.addEventListener('DOMContentLoaded', () => {
             btnGirar.style.opacity = "0.5";
             btnGirar.innerText = "EL DESTINO ESTÁ ESCRITO...";
 
-            // Girar con aleatoriedad visual
             const vueltasExtra = Math.floor(Math.random() * 5 + 5) * 360; 
             const anguloPremio = ((premioId - 1) * 72) + 36;
             const rotacionFinal = vueltasExtra - anguloPremio;
@@ -739,38 +745,30 @@ document.addEventListener('DOMContentLoaded', () => {
             wheel.style.transition = "transform 5s cubic-bezier(0.15, 0, 0.15, 1)";
             wheel.style.transform = `rotate(${rotacionFinal}deg)`;
 
-            // Esperamos a que termine de girar (5 segundos)
             setTimeout(async () => {
-                const premioGanado = premios[premioId - 1];
-                
-                // 1. LANZAMOS EL MENSAJE POR ENCIMA DE TODO
-                if (window.mostrarMensajeDivino) {
-                    window.mostrarMensajeDivino(`⚡ ZEUS TE OTORGA: ${premioGanado} ⚡`, "cian");
-                }
+            const premioGanado = premios[premioId - 1];
+            
+            // 1. Mostrar mensaje (con el Z-INDEX alto que pusimos en el CSS)
+            if (window.mostrarMensajeDivino) {
+                window.mostrarMensajeDivino(`⚡ ZEUS TE OTORGA: ${premioGanado} ⚡`, "cian");
+            }
 
-                // 2. GUARDAR EN SEGUNDO PLANO (sin bloquear el mensaje)
-                try {
-                    // Usamos la variable global API_URL
-                    await fetch(`${API_URL}/guardar-premio`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email: emailUsuario, id_premio: premioId })
-                    });
-                } catch (error) {
-                    console.error("Error al guardar en el Olimpo:", error);
-                }
+            // 2. Guardar en la DB
+            try {
+                await fetch(`${API_URL}/guardar-premio`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: emailUsuario, id_premio: premioId })
+                });
+            } catch (e) { console.error(e); }
 
-                // 3. RETRASAMOS EL CIERRE (3 segundos para que de tiempo a ver el mensaje)
-                setTimeout(() => {
-                    const modalRuleta = document.getElementById('modal-ruleta');
-                    if (modalRuleta) modalRuleta.style.display = 'none';
-                    
-                    if (window.abrirBendiciones) {
-                        window.abrirBendiciones();
-                    }
-                }, 3000); 
+            // 3. Esperar a que el usuario lea el mensaje antes de recargar
+            setTimeout(() => {
+                // Recargamos con el email para que el servidor ejecute la lógica que me has pasado
+                window.location.href = `/?email=${emailUsuario}`;
+            }, 4000); // 4 segundos es ideal
 
-            }, 5000); // Fin del tiempo de giro
+        }, 5000);
         };
     }
 });

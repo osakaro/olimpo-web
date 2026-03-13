@@ -47,11 +47,11 @@ app.get('/', async (req, res) => {
             // 3. Si tiene un premio ganado ('si'), lo inyectamos en el XML
             if (rows.length > 0 && rows[0].ya_jugo === 'si') {
                 const bloquePremio = `
-    <juego_ruleta activo="si">
-        <ya_jugo>si</ya_jugo>
-        <premio_destino>${rows[0].premio_id}</premio_destino>
-        <caducidad>${rows[0].fecha}</caducidad>
-    </juego_ruleta>`;
+            <juego_ruleta activo="no">  
+            <ya_jugo>si</ya_jugo>
+            <premio_destino>${rows[0].premio_id}</premio_destino>
+            <caducidad>${rows[0].fecha}</caducidad>
+            </juego_ruleta>`;
                 
                 // Metemos el bloque justo antes de cerrar la carta
                 xmlBase = xmlBase.replace('</hamburgueseria>', `${bloquePremio}\n</hamburgueseria>`);
