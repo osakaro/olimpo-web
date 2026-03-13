@@ -30,41 +30,45 @@ const fs = require('fs').promises;
 app.get('/', async (req, res) => {
     let connection;
     try {
-        // 1. Leemos tu XML original de la carpeta public
+        // 1. Lee el XML que ahora está "limpio"
         let xmlBase = await fs.readFile(path.join(__dirname, 'public', 'hamburgueseria.xml'), 'utf8');
-        
-        // 2. Miramos si en la URL viene el email (ej: /?email=oscar@mail.com)
         const userEmail = req.query.email;
+
+        let bloqueRuleta = '';
 
         if (userEmail) {
             connection = await mysql.createConnection(dbConfig);
-            // Consultamos TiDB Cloud para ver si este mortal tiene premios
             const [rows] = await connection.execute(
                 "SELECT ya_jugo, premio_id, DATE_FORMAT(caducidad_premio, '%d/%m/%Y') as fecha FROM usuarios WHERE email = ?", 
                 [userEmail]
             );
 
-            // 3. Si tiene un premio ganado ('si'), lo inyectamos en el XML
             if (rows.length > 0 && rows[0].ya_jugo === 'si') {
-                const bloquePremio = `
-            <juego_ruleta activo="no">  
-            <ya_jugo>si</ya_jugo>
-            <premio_destino>${rows[0].premio_id}</premio_destino>
-            <caducidad>${rows[0].fecha}</caducidad>
-            </juego_ruleta>`;
-                
-                // Metemos el bloque justo antes de cerrar la carta
-                xmlBase = xmlBase.replace('</hamburgueseria>', `${bloquePremio}\n</hamburgueseria>`);
+                // Si ya jugó, inyectamos la ruleta APAGADA pero con los datos del premio
+                bloqueRuleta = `
+                <juego_ruleta activo="no">
+                    <ya_jugo>si</ya_jugo>
+                    <premio_destino>${rows[0].premio_id}</premio_destino>
+                    <caducidad>${rows[0].fecha}</caducidad>
+                </juego_ruleta>`;
+            } else {
+                // Si está logueado pero NO ha jugado, inyectamos la ruleta ENCENDIDA
+                bloqueRuleta = `<juego_ruleta activo="si"><ya_jugo>no</ya_jugo></juego_ruleta>`;
             }
+        } else {
+            // Si es un invitado (no hay email), inyectamos la ruleta ENCENDIDA
+            bloqueRuleta = `<juego_ruleta activo="si"><ya_jugo>no</ya_jugo></juego_ruleta>`;
         }
 
-        // 4. Enviamos el XML "tuneado" con los datos de la DB
+        // 2. Aquí es donde se vuelve a meter la ruleta en el XML antes de enviarlo
+        xmlBase = xmlBase.replace('</hamburgueseria>', `${bloqueRuleta}\n</hamburgueseria>`);
+        
         res.header('Content-Type', 'application/xml');
         res.send(xmlBase);
 
     } catch (error) {
-        console.error("Error en la forja del XML:", error);
-        // Si falla la DB, mandamos el XML limpio para que al menos vean la carta
+        console.error("Error:", error);
+        // Si todo falla, enviamos el archivo normal
         res.sendFile(path.join(__dirname, 'public', 'hamburgueseria.xml'));
     } finally {
         if (connection) await connection.end();
