@@ -291,18 +291,48 @@
                         <h2 class="titulo-neon">LA SUERTE DE <span class="palabra-rosa">ZEUS</span></h2>
                         <p style="color: white; margin-bottom: 20px;">¡Gira y reclama un manjar gratuito para tu banquete!</p>
                         
-                        <div class="roulette-wrapper" style="position: relative; width: 300px; height: 300px; margin: 0 auto 30px;">
-                        <div id="wheel-pointer" style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); font-size: 30px; color: var(--cyan); z-index: 10;">▼
+                    <div class="roulette-wrapper">
+                            <div id="wheel-pointer">▼</div>
+                            
+                            <div id="main-wheel">
+                                
+                                <div class="seg seg-1">
+                                    <div class="seg-content">
+                                        <span class="seg-icon">🍔</span>
+                                        <span class="seg-label">TITÁN</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="seg seg-2">
+                                    <div class="seg-content">
+                                        <span class="seg-icon">🍫</span>
+                                        <span class="seg-label">HADES</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="seg seg-3">
+                                    <div class="seg-content">
+                                        <span class="seg-icon">🍟</span>
+                                        <span class="seg-label">RAYO</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="seg seg-4">
+                                    <div class="seg-content">
+                                        <span class="seg-icon">🐐</span>
+                                        <span class="seg-label">ATENEA</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="seg seg-5">
+                                    <div class="seg-content">
+                                        <span class="seg-icon">🐍</span>
+                                        <span class="seg-label">MEDUSA</span>
+                                    </div>
+                                </div>
+                                
+                            </div> <input type="hidden" id="datos-premio" value="{/hamburgueseria/juego_ruleta/premio_destino}" />
                         </div>
-                        
-                        <div id="main-wheel" style="width: 100%; height: 100%; border-radius: 50%; border: 5px solid var(--cyan); position: relative; overflow: hidden; transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1); background: #111;">
-                            <div class="seg" style="--i:1;--clr:#e74c3c;position:absolute;width:50%;height:50%;transform-origin:bottom right;transform:rotate(72deg) skewY(-18deg);background:var(--clr);border:1px solid #000;"></div>
-                            <div class="seg" style="--i:2;--clr:#f1c40f;position:absolute;width:50%;height:50%;transform-origin:bottom right;transform:rotate(144deg) skewY(-18deg);background:var(--clr);border:1px solid #000;"></div>
-                            <div class="seg" style="--i:3;--clr:#3498db;position:absolute;width:50%;height:50%;transform-origin:bottom right;transform:rotate(216deg) skewY(-18deg);background:var(--clr);border:1px solid #000;"></div>
-                            <div class="seg" style="--i:4;--clr:#2ecc71;position:absolute;width:50%;height:50%;transform-origin:bottom right;transform:rotate(288deg) skewY(-18deg);background:var(--clr);border:1px solid #000;"></div>
-                            <div class="seg" style="--i:5;--clr:#9b59b6;position:absolute;width:50%;height:50%;transform-origin:bottom right;transform:rotate(360deg) skewY(-18deg);background:var(--clr);border:1px solid #000;"></div>
-                        </div>
-                    </div>  
 
                         <input type="hidden" id="datos-premio" value="{/hamburgueseria/juego_ruleta/premio_destino}" />
                         
